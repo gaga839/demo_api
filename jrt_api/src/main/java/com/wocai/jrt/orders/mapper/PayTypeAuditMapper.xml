@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wocai.jrt.orders.dao.PayTypeAuditDao" >
+  <resultMap id="payTypeAuditResultMap" type="com.wocai.jrt.orders.model.PayTypeAudit" >
+    <!--
+      WARNING - 结果集映射，不含Blob字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="audit_name" property="auditName" jdbcType="VARCHAR" />
+    <result column="audit_id" property="auditId" jdbcType="VARCHAR" />
+    <result column="audit_time" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="result" property="result" jdbcType="BIT" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="apply_reason" property="applyReason" jdbcType="VARCHAR" />
+    <result column="employee_id" property="employeeId" jdbcType="VARCHAR" />
+    <result column="employee_name" property="employeeName" jdbcType="VARCHAR" />
+    <result column="apply_time" property="applyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - 该表所有字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    id, audit_name, audit_id, audit_time, result, order_id, apply_reason, employee_id, 
+    employee_name, apply_time
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <!--
+      WARNING - Criteria条件查询的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <foreach collection="oredCriteria" item="criteria" >
+        <if test="criteria.valid" >
+          <if test="criteria.andRelation" >
+            and
+          </if>
+          <if test="!criteria.andRelation" >
+            or
+          </if>
+          <trim prefix="(" suffix=")" prefixOverrides="and|or" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue and !criterion.orValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.noValue and criterion.orValue" >
+                  or ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue and !criterion.orValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.singleValue and criterion.orValue" >
+                  or ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue and !criterion.orValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.betweenValue and criterion.orValue" >
+                  or ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue and !criterion.orValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.listValue and criterion.orValue" >
+                  or ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+    <if test="orderBy != null" >
+      order by ${orderBy}
+    </if>
+    <if test="start != null" >
+      limit ${start}, ${pageSize}
+    </if>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <!--
+      WARNING - Criteria条件查询的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <foreach collection="params.oredCriteria" item="criteria" >
+        <if test="criteria.valid" >
+          <if test="criteria.andRelation" >
+            and
+          </if>
+          <if test="!criteria.andRelation" >
+            or
+          </if>
+          <trim prefix="(" suffix=")" prefixOverrides="and|or" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue and !criterion.orValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.noValue and criterion.orValue" >
+                  or ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue and !criterion.orValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.singleValue and criterion.orValue" >
+                  or ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue and !criterion.orValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.betweenValue and criterion.orValue" >
+                  or ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue and !criterion.orValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.listValue and criterion.orValue" >
+                  or ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="model_where_clause" >
+    <!--
+      WARNING - 根据model条件，查询或更新的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <trim prefixOverrides="and" >
+        <if test="auditName != null" >
+          and audit_name = #{auditName,jdbcType=VARCHAR}
+        </if>
+        <if test="auditId != null" >
+          and audit_id = #{auditId,jdbcType=VARCHAR}
+        </if>
+        <if test="auditTime != null" >
+          and audit_time = #{auditTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="result != null" >
+          and result = #{result,jdbcType=BIT}
+        </if>
+        <if test="orderId != null" >
+          and order_id = #{orderId,jdbcType=VARCHAR}
+        </if>
+        <if test="applyReason != null" >
+          and apply_reason = #{applyReason,jdbcType=VARCHAR}
+        </if>
+        <if test="employeeId != null" >
+          and employee_id = #{employeeId,jdbcType=VARCHAR}
+        </if>
+        <if test="employeeName != null" >
+          and employee_name = #{employeeName,jdbcType=VARCHAR}
+        </if>
+        <if test="applyTime != null" >
+          and apply_time = #{applyTime,jdbcType=TIMESTAMP}
+        </if>
+      </trim>
+    </where>
+    <if test="orderBy != null" >
+      order by ${orderBy}
+    </if>
+    <if test="start != null" >
+      limit ${start}, ${pageSize}
+    </if>
+  </sql>
+  <sql id="update_model_where_clause" >
+    <!--
+      WARNING - 根据model条件，更新的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <trim prefixOverrides="and" >
+        <if test="params.auditName != null" >
+          and audit_name = #{params.auditName,jdbcType=VARCHAR}
+        </if>
+        <if test="params.auditId != null" >
+          and audit_id = #{params.auditId,jdbcType=VARCHAR}
+        </if>
+        <if test="params.auditTime != null" >
+          and audit_time = #{params.auditTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="params.result != null" >
+          and result = #{params.result,jdbcType=BIT}
+        </if>
+        <if test="params.orderId != null" >
+          and order_id = #{params.orderId,jdbcType=VARCHAR}
+        </if>
+        <if test="params.applyReason != null" >
+          and apply_reason = #{params.applyReason,jdbcType=VARCHAR}
+        </if>
+        <if test="params.employeeId != null" >
+          and employee_id = #{params.employeeId,jdbcType=VARCHAR}
+        </if>
+        <if test="params.employeeName != null" >
+          and employee_name = #{params.employeeName,jdbcType=VARCHAR}
+        </if>
+        <if test="params.applyTime != null" >
+          and apply_time = #{params.applyTime,jdbcType=TIMESTAMP}
+        </if>
+      </trim>
+    </where>
+  </sql>
+  <select id="queryForList" resultMap="payTypeAuditResultMap" parameterType="com.wocai.jrt.orders.model.PayTypeAuditBean" >
+    <!--
+      WARNING - 根据Criteria所携带条件查询数据，不含Blob字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pay_type_audit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="queryList" resultMap="payTypeAuditResultMap" parameterType="com.wocai.jrt.orders.model.PayTypeAudit" >
+    <!--
+      WARNING - 根据params所携带条件查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pay_type_audit
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <select id="pagedForList" resultMap="payTypeAuditResultMap" parameterType="com.wocai.jrt.orders.model.PayTypeAuditBean" >
+    <!--
+      WARNING - 根据Criteria所携带条件分页查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pay_type_audit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="pagedList" resultMap="payTypeAuditResultMap" parameterType="com.wocai.jrt.orders.model.PayTypeAudit" >
+    <!--
+      WARNING - 根据params所携带条件分页查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pay_type_audit
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <select id="get" resultMap="payTypeAuditResultMap" parameterType="java.lang.String" >
+    <!--
+      WARNING - 根据主键查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from pay_type_audit
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="unique" resultMap="payTypeAuditResultMap" parameterType="com.wocai.jrt.orders.model.PayTypeAudit" >
+    <!--
+      WARNING - 根据params所携带条件查询唯一记录。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pay_type_audit
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <delete id="deleteById" parameterType="java.lang.String" >
+    <!--
+      WARNING - 根据主键删除记录。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    delete from pay_type_audit
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBatch" parameterType="com.wocai.jrt.orders.model.PayTypeAuditBean" >
+    <!--
+      WARNING - 根据Criteria所携带条件删除记录。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    delete from pay_type_audit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <delete id="deleteBulks" parameterType="com.wocai.jrt.orders.model.PayTypeAudit" >
+    <!--
+      WARNING - 根据params所携带条件删除数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    delete from pay_type_audit
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </delete>
+  <insert id="save" parameterType="com.wocai.jrt.orders.model.PayTypeAudit" >
+    <!--
+      WARNING - 插入记录，只有非空字段才会插入到数据库。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    insert into pay_type_audit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="auditName != null" >
+        audit_name,
+      </if>
+      <if test="auditId != null" >
+        audit_id,
+      </if>
+      <if test="auditTime != null" >
+        audit_time,
+      </if>
+      <if test="result != null" >
+        result,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="applyReason != null" >
+        apply_reason,
+      </if>
+      <if test="employeeId != null" >
+        employee_id,
+      </if>
+      <if test="employeeName != null" >
+        employee_name,
+      </if>
+      <if test="applyTime != null" >
+        apply_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="auditName != null" >
+        #{auditName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditId != null" >
+        #{auditId,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=BIT},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyReason != null" >
+        #{applyReason,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null" >
+        #{employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeName != null" >
+        #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTime != null" >
+        #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="count" parameterType="com.wocai.jrt.orders.model.PayTypeAuditBean" resultType="java.lang.Integer" >
+    <!--
+      WARNING - 根据Criteria所携带条件进行count计数。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select count(*) from pay_type_audit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="countBy" parameterType="com.wocai.jrt.orders.model.PayTypeAudit" resultType="java.lang.Integer" >
+    <!--
+      WARNING - 根据params所携带条件计数。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select count(*) from pay_type_audit
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <update id="updateBatch" parameterType="map" >
+    <!--
+      WARNING - 根据Criteria所携带条件更新指定字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    update pay_type_audit
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditName != null" >
+        audit_name = #{record.auditName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditId != null" >
+        audit_id = #{record.auditId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditTime != null" >
+        audit_time = #{record.auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.result != null" >
+        result = #{record.result,jdbcType=BIT},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyReason != null" >
+        apply_reason = #{record.applyReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeId != null" >
+        employee_id = #{record.employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeName != null" >
+        employee_name = #{record.employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyTime != null" >
+        apply_time = #{record.applyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateBulks" parameterType="map" >
+    <!--
+      WARNING - 根据params所携带条件更新指定字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    update pay_type_audit
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditName != null" >
+        audit_name = #{record.auditName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditId != null" >
+        audit_id = #{record.auditId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditTime != null" >
+        audit_time = #{record.auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.result != null" >
+        result = #{record.result,jdbcType=BIT},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyReason != null" >
+        apply_reason = #{record.applyReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeId != null" >
+        employee_id = #{record.employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeName != null" >
+        employee_name = #{record.employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyTime != null" >
+        apply_time = #{record.applyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="update_model_where_clause" />
+    </if>
+  </update>
+  <update id="updateById" parameterType="com.wocai.jrt.orders.model.PayTypeAudit" >
+    <!--
+      WARNING - 根据主键更新指定字段的数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    update pay_type_audit
+    <set >
+      <if test="auditName != null" >
+        audit_name = #{auditName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditId != null" >
+        audit_id = #{auditId,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="result != null" >
+        result = #{result,jdbcType=BIT},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyReason != null" >
+        apply_reason = #{applyReason,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null" >
+        employee_id = #{employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeName != null" >
+        employee_name = #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTime != null" >
+        apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

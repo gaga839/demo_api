@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wocai.jrt.paper.dao.PaperDao" >
+  <resultMap id="paperResultMap" type="com.wocai.jrt.paper.model.Paper" >
+    <!--
+      WARNING - 结果集映射，不含Blob字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="org_id" property="orgId" jdbcType="VARCHAR" />
+    <result column="current" property="current" jdbcType="BIT" />
+    <result column="year" property="year" jdbcType="VARCHAR" />
+    <result column="qualified" property="qualified" jdbcType="VARCHAR" />
+    <result column="unqualified" property="unqualified" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - 该表所有字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    id, title, create_time, org_id, current, year, qualified, unqualified
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <!--
+      WARNING - Criteria条件查询的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <foreach collection="oredCriteria" item="criteria" >
+        <if test="criteria.valid" >
+          <if test="criteria.andRelation" >
+            and
+          </if>
+          <if test="!criteria.andRelation" >
+            or
+          </if>
+          <trim prefix="(" suffix=")" prefixOverrides="and|or" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue and !criterion.orValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.noValue and criterion.orValue" >
+                  or ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue and !criterion.orValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.singleValue and criterion.orValue" >
+                  or ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue and !criterion.orValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.betweenValue and criterion.orValue" >
+                  or ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue and !criterion.orValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.listValue and criterion.orValue" >
+                  or ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+    <if test="orderBy != null" >
+      order by ${orderBy}
+    </if>
+    <if test="start != null" >
+      limit ${start}, ${pageSize}
+    </if>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <!--
+      WARNING - Criteria条件查询的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <foreach collection="params.oredCriteria" item="criteria" >
+        <if test="criteria.valid" >
+          <if test="criteria.andRelation" >
+            and
+          </if>
+          <if test="!criteria.andRelation" >
+            or
+          </if>
+          <trim prefix="(" suffix=")" prefixOverrides="and|or" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue and !criterion.orValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.noValue and criterion.orValue" >
+                  or ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue and !criterion.orValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.singleValue and criterion.orValue" >
+                  or ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue and !criterion.orValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.betweenValue and criterion.orValue" >
+                  or ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue and !criterion.orValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.listValue and criterion.orValue" >
+                  or ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="model_where_clause" >
+    <!--
+      WARNING - 根据model条件，查询或更新的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <trim prefixOverrides="and" >
+        <if test="title != null" >
+          and title = #{title,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null" >
+          and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="orgId != null" >
+          and org_id = #{orgId,jdbcType=VARCHAR}
+        </if>
+        <if test="current != null" >
+          and current = #{current,jdbcType=BIT}
+        </if>
+        <if test="year != null" >
+          and year = #{year,jdbcType=VARCHAR}
+        </if>
+        <if test="qualified != null" >
+          and qualified = #{qualified,jdbcType=VARCHAR}
+        </if>
+        <if test="unqualified != null" >
+          and unqualified = #{unqualified,jdbcType=VARCHAR}
+        </if>
+      </trim>
+    </where>
+    <if test="orderBy != null" >
+      order by ${orderBy}
+    </if>
+    <if test="start != null" >
+      limit ${start}, ${pageSize}
+    </if>
+  </sql>
+  <sql id="update_model_where_clause" >
+    <!--
+      WARNING - 根据model条件，更新的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <trim prefixOverrides="and" >
+        <if test="params.title != null" >
+          and title = #{params.title,jdbcType=VARCHAR}
+        </if>
+        <if test="params.createTime != null" >
+          and create_time = #{params.createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="params.orgId != null" >
+          and org_id = #{params.orgId,jdbcType=VARCHAR}
+        </if>
+        <if test="params.current != null" >
+          and current = #{params.current,jdbcType=BIT}
+        </if>
+        <if test="params.year != null" >
+          and year = #{params.year,jdbcType=VARCHAR}
+        </if>
+        <if test="params.qualified != null" >
+          and qualified = #{params.qualified,jdbcType=VARCHAR}
+        </if>
+        <if test="params.unqualified != null" >
+          and unqualified = #{params.unqualified,jdbcType=VARCHAR}
+        </if>
+      </trim>
+    </where>
+  </sql>
+  <select id="queryForList" resultMap="paperResultMap" parameterType="com.wocai.jrt.paper.model.PaperBean" >
+    <!--
+      WARNING - 根据Criteria所携带条件查询数据，不含Blob字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from paper
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="queryList" resultMap="paperResultMap" parameterType="com.wocai.jrt.paper.model.Paper" >
+    <!--
+      WARNING - 根据params所携带条件查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from paper
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <select id="pagedForList" resultMap="paperResultMap" parameterType="com.wocai.jrt.paper.model.PaperBean" >
+    <!--
+      WARNING - 根据Criteria所携带条件分页查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from paper
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="pagedList" resultMap="paperResultMap" parameterType="com.wocai.jrt.paper.model.Paper" >
+    <!--
+      WARNING - 根据params所携带条件分页查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from paper
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <select id="get" resultMap="paperResultMap" parameterType="java.lang.String" >
+    <!--
+      WARNING - 根据主键查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from paper
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="unique" resultMap="paperResultMap" parameterType="com.wocai.jrt.paper.model.Paper" >
+    <!--
+      WARNING - 根据params所携带条件查询唯一记录。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from paper
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <delete id="deleteById" parameterType="java.lang.String" >
+    <!--
+      WARNING - 根据主键删除记录。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    delete from paper
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBatch" parameterType="com.wocai.jrt.paper.model.PaperBean" >
+    <!--
+      WARNING - 根据Criteria所携带条件删除记录。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    delete from paper
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <delete id="deleteBulks" parameterType="com.wocai.jrt.paper.model.Paper" >
+    <!--
+      WARNING - 根据params所携带条件删除数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    delete from paper
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </delete>
+  <insert id="save" parameterType="com.wocai.jrt.paper.model.Paper" >
+    <!--
+      WARNING - 插入记录，只有非空字段才会插入到数据库。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    insert into paper
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="orgId != null" >
+        org_id,
+      </if>
+      <if test="current != null" >
+        current,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="qualified != null" >
+        qualified,
+      </if>
+      <if test="unqualified != null" >
+        unqualified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="current != null" >
+        #{current,jdbcType=BIT},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="qualified != null" >
+        #{qualified,jdbcType=VARCHAR},
+      </if>
+      <if test="unqualified != null" >
+        #{unqualified,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="count" parameterType="com.wocai.jrt.paper.model.PaperBean" resultType="java.lang.Integer" >
+    <!--
+      WARNING - 根据Criteria所携带条件进行count计数。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select count(*) from paper
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="countBy" parameterType="com.wocai.jrt.paper.model.Paper" resultType="java.lang.Integer" >
+    <!--
+      WARNING - 根据params所携带条件计数。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select count(*) from paper
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <update id="updateBatch" parameterType="map" >
+    <!--
+      WARNING - 根据Criteria所携带条件更新指定字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    update paper
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orgId != null" >
+        org_id = #{record.orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.current != null" >
+        current = #{record.current,jdbcType=BIT},
+      </if>
+      <if test="record.year != null" >
+        year = #{record.year,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qualified != null" >
+        qualified = #{record.qualified,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unqualified != null" >
+        unqualified = #{record.unqualified,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateBulks" parameterType="map" >
+    <!--
+      WARNING - 根据params所携带条件更新指定字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    update paper
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orgId != null" >
+        org_id = #{record.orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.current != null" >
+        current = #{record.current,jdbcType=BIT},
+      </if>
+      <if test="record.year != null" >
+        year = #{record.year,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qualified != null" >
+        qualified = #{record.qualified,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unqualified != null" >
+        unqualified = #{record.unqualified,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="update_model_where_clause" />
+    </if>
+  </update>
+  <update id="updateById" parameterType="com.wocai.jrt.paper.model.Paper" >
+    <!--
+      WARNING - 根据主键更新指定字段的数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    update paper
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgId != null" >
+        org_id = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="current != null" >
+        current = #{current,jdbcType=BIT},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="qualified != null" >
+        qualified = #{qualified,jdbcType=VARCHAR},
+      </if>
+      <if test="unqualified != null" >
+        unqualified = #{unqualified,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

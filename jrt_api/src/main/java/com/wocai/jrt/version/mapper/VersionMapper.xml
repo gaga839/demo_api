@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wocai.jrt.version.dao.VersionDao" >
+  <resultMap id="versionResultMap" type="com.wocai.jrt.version.model.Version" >
+    <!--
+      WARNING - 结果集映射，不含Blob字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="product_softname" property="productSoftname" jdbcType="VARCHAR" />
+    <result column="product_serial" property="productSerial" jdbcType="VARCHAR" />
+    <result column="version_number" property="versionNumber" jdbcType="VARCHAR" />
+    <result column="update_description" property="updateDescription" jdbcType="VARCHAR" />
+    <result column="download_url" property="downloadUrl" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="update_lowest_version" property="updateLowestVersion" jdbcType="VARCHAR" />
+    <result column="tips" property="tips" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - 该表所有字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    id, product_softname, product_serial, version_number, update_description, download_url, 
+    update_time, update_lowest_version, tips
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <!--
+      WARNING - Criteria条件查询的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+    <if test="orderBy != null" >
+      order by ${orderBy}
+    </if>
+    <if test="start != null" >
+      limit ${start}, ${pageSize}
+    </if>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <!--
+      WARNING - Criteria条件查询的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <foreach collection="params.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="model_where_clause" >
+    <!--
+      WARNING - 根据model条件，查询或更新的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <trim prefixOverrides="and" >
+        <if test="productSoftname != null" >
+          and product_softname = #{productSoftname,jdbcType=VARCHAR}
+        </if>
+        <if test="productSerial != null" >
+          and product_serial = #{productSerial,jdbcType=VARCHAR}
+        </if>
+        <if test="versionNumber != null" >
+          and version_number = #{versionNumber,jdbcType=VARCHAR}
+        </if>
+        <if test="updateDescription != null" >
+          and update_description = #{updateDescription,jdbcType=VARCHAR}
+        </if>
+        <if test="downloadUrl != null" >
+          and download_url = #{downloadUrl,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null" >
+          and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateLowestVersion != null" >
+          and update_lowest_version = #{updateLowestVersion,jdbcType=VARCHAR}
+        </if>
+        <if test="tips != null" >
+          and tips = #{tips,jdbcType=BIT}
+        </if>
+      </trim>
+    </where>
+    <if test="orderBy != null" >
+      order by ${orderBy}
+    </if>
+    <if test="start != null" >
+      limit ${start}, ${pageSize}
+    </if>
+  </sql>
+  <sql id="update_model_where_clause" >
+    <!--
+      WARNING - 根据model条件，更新的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <trim prefixOverrides="and" >
+        <if test="params.productSoftname != null" >
+          and product_softname = #{params.productSoftname,jdbcType=VARCHAR}
+        </if>
+        <if test="params.productSerial != null" >
+          and product_serial = #{params.productSerial,jdbcType=VARCHAR}
+        </if>
+        <if test="params.versionNumber != null" >
+          and version_number = #{params.versionNumber,jdbcType=VARCHAR}
+        </if>
+        <if test="params.updateDescription != null" >
+          and update_description = #{params.updateDescription,jdbcType=VARCHAR}
+        </if>
+        <if test="params.downloadUrl != null" >
+          and download_url = #{params.downloadUrl,jdbcType=VARCHAR}
+        </if>
+        <if test="params.updateTime != null" >
+          and update_time = #{params.updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="params.updateLowestVersion != null" >
+          and update_lowest_version = #{params.updateLowestVersion,jdbcType=VARCHAR}
+        </if>
+        <if test="params.tips != null" >
+          and tips = #{params.tips,jdbcType=BIT}
+        </if>
+      </trim>
+    </where>
+  </sql>
+  <select id="queryForList" resultMap="versionResultMap" parameterType="com.wocai.jrt.version.model.VersionBean" >
+    <!--
+      WARNING - 根据Criteria所携带条件查询数据，不含Blob字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from version
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="queryList" resultMap="versionResultMap" parameterType="com.wocai.jrt.version.model.Version" >
+    <!--
+      WARNING - 根据params所携带条件查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from version
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <select id="pagedForList" resultMap="versionResultMap" parameterType="com.wocai.jrt.version.model.VersionBean" >
+    <!--
+      WARNING - 根据Criteria所携带条件分页查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from version
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="pagedList" resultMap="versionResultMap" parameterType="com.wocai.jrt.version.model.Version" >
+    <!--
+      WARNING - 根据params所携带条件分页查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from version
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <select id="get" resultMap="versionResultMap" parameterType="java.lang.String" >
+    <!--
+      WARNING - 根据主键查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from version
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="unique" resultMap="versionResultMap" parameterType="com.wocai.jrt.version.model.Version" >
+    <!--
+      WARNING - 根据params所携带条件查询唯一记录。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from version
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <delete id="deleteById" parameterType="java.lang.String" >
+    <!--
+      WARNING - 根据主键删除记录。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    delete from version
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBatch" parameterType="com.wocai.jrt.version.model.VersionBean" >
+    <!--
+      WARNING - 根据Criteria所携带条件删除记录。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    delete from version
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <delete id="deleteBulks" parameterType="com.wocai.jrt.version.model.Version" >
+    <!--
+      WARNING - 根据params所携带条件删除数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    delete from version
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </delete>
+  <insert id="save" parameterType="com.wocai.jrt.version.model.Version" >
+    <!--
+      WARNING - 插入记录，只有非空字段才会插入到数据库。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    insert into version
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="productSoftname != null" >
+        product_softname,
+      </if>
+      <if test="productSerial != null" >
+        product_serial,
+      </if>
+      <if test="versionNumber != null" >
+        version_number,
+      </if>
+      <if test="updateDescription != null" >
+        update_description,
+      </if>
+      <if test="downloadUrl != null" >
+        download_url,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="updateLowestVersion != null" >
+        update_lowest_version,
+      </if>
+      <if test="tips != null" >
+        tips,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="productSoftname != null" >
+        #{productSoftname,jdbcType=VARCHAR},
+      </if>
+      <if test="productSerial != null" >
+        #{productSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="versionNumber != null" >
+        #{versionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDescription != null" >
+        #{updateDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="downloadUrl != null" >
+        #{downloadUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateLowestVersion != null" >
+        #{updateLowestVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="tips != null" >
+        #{tips,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="count" parameterType="com.wocai.jrt.version.model.VersionBean" resultType="java.lang.Integer" >
+    <!--
+      WARNING - 根据Criteria所携带条件进行count计数。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select count(*) from version
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="countBy" parameterType="com.wocai.jrt.version.model.Version" resultType="java.lang.Integer" >
+    <!--
+      WARNING - 根据params所携带条件计数。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select count(*) from version
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <update id="updateBatch" parameterType="map" >
+    <!--
+      WARNING - 根据Criteria所携带条件更新指定字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    update version
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productSoftname != null" >
+        product_softname = #{record.productSoftname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productSerial != null" >
+        product_serial = #{record.productSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="record.versionNumber != null" >
+        version_number = #{record.versionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateDescription != null" >
+        update_description = #{record.updateDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.downloadUrl != null" >
+        download_url = #{record.downloadUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateLowestVersion != null" >
+        update_lowest_version = #{record.updateLowestVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tips != null" >
+        tips = #{record.tips,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateBulks" parameterType="map" >
+    <!--
+      WARNING - 根据params所携带条件更新指定字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    update version
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productSoftname != null" >
+        product_softname = #{record.productSoftname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productSerial != null" >
+        product_serial = #{record.productSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="record.versionNumber != null" >
+        version_number = #{record.versionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateDescription != null" >
+        update_description = #{record.updateDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.downloadUrl != null" >
+        download_url = #{record.downloadUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateLowestVersion != null" >
+        update_lowest_version = #{record.updateLowestVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tips != null" >
+        tips = #{record.tips,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="update_model_where_clause" />
+    </if>
+  </update>
+  <update id="updateById" parameterType="com.wocai.jrt.version.model.Version" >
+    <!--
+      WARNING - 根据主键更新指定字段的数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    update version
+    <set >
+      <if test="productSoftname != null" >
+        product_softname = #{productSoftname,jdbcType=VARCHAR},
+      </if>
+      <if test="productSerial != null" >
+        product_serial = #{productSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="versionNumber != null" >
+        version_number = #{versionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDescription != null" >
+        update_description = #{updateDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="downloadUrl != null" >
+        download_url = #{downloadUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateLowestVersion != null" >
+        update_lowest_version = #{updateLowestVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="tips != null" >
+        tips = #{tips,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

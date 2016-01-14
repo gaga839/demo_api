@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wocai.jrt.product.dao.ProductNetDao" >
+  <resultMap id="productNetResultMap" type="com.wocai.jrt.product.model.ProductNet" >
+    <!--
+      WARNING - 结果集映射，不含Blob字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="product_id" property="productId" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="cumulative_net" property="cumulativeNet" jdbcType="DECIMAL" />
+    <result column="unit_net" property="unitNet" jdbcType="DECIMAL" />
+    <result column="org_id" property="orgId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - 该表所有字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    id, product_id, date, cumulative_net, unit_net, org_id
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <!--
+      WARNING - Criteria条件查询的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+    <if test="orderBy != null" >
+      order by ${orderBy}
+    </if>
+    <if test="start != null" >
+      limit ${start}, ${pageSize}
+    </if>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <!--
+      WARNING - Criteria条件查询的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <foreach collection="params.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="model_where_clause" >
+    <!--
+      WARNING - 根据model条件，查询或更新的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <trim prefixOverrides="and" >
+        <if test="productId != null" >
+          and product_id = #{productId,jdbcType=VARCHAR}
+        </if>
+        <if test="date != null" >
+          and date = #{date,jdbcType=TIMESTAMP}
+        </if>
+        <if test="cumulativeNet != null" >
+          and cumulative_net = #{cumulativeNet,jdbcType=DECIMAL}
+        </if>
+        <if test="unitNet != null" >
+          and unit_net = #{unitNet,jdbcType=DECIMAL}
+        </if>
+        <if test="orgId != null" >
+          and org_id = #{orgId,jdbcType=VARCHAR}
+        </if>
+      </trim>
+    </where>
+    <if test="orderBy != null" >
+      order by ${orderBy}
+    </if>
+    <if test="start != null" >
+      limit ${start}, ${pageSize}
+    </if>
+  </sql>
+  <sql id="update_model_where_clause" >
+    <!--
+      WARNING - 根据model条件，更新的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <trim prefixOverrides="and" >
+        <if test="params.productId != null" >
+          and product_id = #{params.productId,jdbcType=VARCHAR}
+        </if>
+        <if test="params.date != null" >
+          and date = #{params.date,jdbcType=TIMESTAMP}
+        </if>
+        <if test="params.cumulativeNet != null" >
+          and cumulative_net = #{params.cumulativeNet,jdbcType=DECIMAL}
+        </if>
+        <if test="params.unitNet != null" >
+          and unit_net = #{params.unitNet,jdbcType=DECIMAL}
+        </if>
+        <if test="params.orgId != null" >
+          and org_id = #{params.orgId,jdbcType=VARCHAR}
+        </if>
+      </trim>
+    </where>
+  </sql>
+  <select id="queryForList" resultMap="productNetResultMap" parameterType="com.wocai.jrt.product.model.ProductNetBean" >
+    <!--
+      WARNING - 根据Criteria所携带条件查询数据，不含Blob字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from product_net
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="queryList" resultMap="productNetResultMap" parameterType="com.wocai.jrt.product.model.ProductNet" >
+    <!--
+      WARNING - 根据params所携带条件查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from product_net
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <select id="pagedForList" resultMap="productNetResultMap" parameterType="com.wocai.jrt.product.model.ProductNetBean" >
+    <!--
+      WARNING - 根据Criteria所携带条件分页查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from product_net
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="pagedList" resultMap="productNetResultMap" parameterType="com.wocai.jrt.product.model.ProductNet" >
+    <!--
+      WARNING - 根据params所携带条件分页查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from product_net
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <select id="get" resultMap="productNetResultMap" parameterType="java.lang.String" >
+    <!--
+      WARNING - 根据主键查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from product_net
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="unique" resultMap="productNetResultMap" parameterType="com.wocai.jrt.product.model.ProductNet" >
+    <!--
+      WARNING - 根据params所携带条件查询唯一记录。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from product_net
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <delete id="deleteById" parameterType="java.lang.String" >
+    <!--
+      WARNING - 根据主键删除记录。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    delete from product_net
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBatch" parameterType="com.wocai.jrt.product.model.ProductNetBean" >
+    <!--
+      WARNING - 根据Criteria所携带条件删除记录。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    delete from product_net
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <delete id="deleteBulks" parameterType="com.wocai.jrt.product.model.ProductNet" >
+    <!--
+      WARNING - 根据params所携带条件删除数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    delete from product_net
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </delete>
+  <insert id="save" parameterType="com.wocai.jrt.product.model.ProductNet" >
+    <!--
+      WARNING - 插入记录，只有非空字段才会插入到数据库。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    insert into product_net
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="cumulativeNet != null" >
+        cumulative_net,
+      </if>
+      <if test="unitNet != null" >
+        unit_net,
+      </if>
+      <if test="orgId != null" >
+        org_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cumulativeNet != null" >
+        #{cumulativeNet,jdbcType=DECIMAL},
+      </if>
+      <if test="unitNet != null" >
+        #{unitNet,jdbcType=DECIMAL},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="count" parameterType="com.wocai.jrt.product.model.ProductNetBean" resultType="java.lang.Integer" >
+    <!--
+      WARNING - 根据Criteria所携带条件进行count计数。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select count(*) from product_net
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="countBy" parameterType="com.wocai.jrt.product.model.ProductNet" resultType="java.lang.Integer" >
+    <!--
+      WARNING - 根据params所携带条件计数。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select count(*) from product_net
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <update id="updateBatch" parameterType="map" >
+    <!--
+      WARNING - 根据Criteria所携带条件更新指定字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    update product_net
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productId != null" >
+        product_id = #{record.productId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.date != null" >
+        date = #{record.date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cumulativeNet != null" >
+        cumulative_net = #{record.cumulativeNet,jdbcType=DECIMAL},
+      </if>
+      <if test="record.unitNet != null" >
+        unit_net = #{record.unitNet,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orgId != null" >
+        org_id = #{record.orgId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateBulks" parameterType="map" >
+    <!--
+      WARNING - 根据params所携带条件更新指定字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    update product_net
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productId != null" >
+        product_id = #{record.productId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.date != null" >
+        date = #{record.date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cumulativeNet != null" >
+        cumulative_net = #{record.cumulativeNet,jdbcType=DECIMAL},
+      </if>
+      <if test="record.unitNet != null" >
+        unit_net = #{record.unitNet,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orgId != null" >
+        org_id = #{record.orgId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="update_model_where_clause" />
+    </if>
+  </update>
+  <update id="updateById" parameterType="com.wocai.jrt.product.model.ProductNet" >
+    <!--
+      WARNING - 根据主键更新指定字段的数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    update product_net
+    <set >
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cumulativeNet != null" >
+        cumulative_net = #{cumulativeNet,jdbcType=DECIMAL},
+      </if>
+      <if test="unitNet != null" >
+        unit_net = #{unitNet,jdbcType=DECIMAL},
+      </if>
+      <if test="orgId != null" >
+        org_id = #{orgId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

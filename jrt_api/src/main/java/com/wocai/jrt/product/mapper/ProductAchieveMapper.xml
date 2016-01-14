@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wocai.jrt.product.dao.ProductAchieveDao" >
+  <resultMap id="productAchieveResultMap" type="com.wocai.jrt.product.model.ProductAchieve" >
+    <!--
+      WARNING - 结果集映射，不含Blob字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="product_id" property="productId" jdbcType="VARCHAR" />
+    <result column="this_year" property="thisYear" jdbcType="DECIMAL" />
+    <result column="one_month" property="oneMonth" jdbcType="DECIMAL" />
+    <result column="six_month" property="sixMonth" jdbcType="DECIMAL" />
+    <result column="one_year" property="oneYear" jdbcType="DECIMAL" />
+    <result column="two_year" property="twoYear" jdbcType="DECIMAL" />
+    <result column="three_year" property="threeYear" jdbcType="DECIMAL" />
+    <result column="five_year" property="fiveYear" jdbcType="DECIMAL" />
+    <result column="from_founded" property="fromFounded" jdbcType="DECIMAL" />
+    <result column="publish_date" property="publishDate" jdbcType="TIMESTAMP" />
+    <result column="org_id" property="orgId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - 该表所有字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    id, product_id, this_year, one_month, six_month, one_year, two_year, three_year, 
+    five_year, from_founded, publish_date, org_id
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <!--
+      WARNING - Criteria条件查询的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+    <if test="orderBy != null" >
+      order by ${orderBy}
+    </if>
+    <if test="start != null" >
+      limit ${start}, ${pageSize}
+    </if>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <!--
+      WARNING - Criteria条件查询的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <foreach collection="params.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="model_where_clause" >
+    <!--
+      WARNING - 根据model条件，查询或更新的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <trim prefixOverrides="and" >
+        <if test="productId != null" >
+          and product_id = #{productId,jdbcType=VARCHAR}
+        </if>
+        <if test="thisYear != null" >
+          and this_year = #{thisYear,jdbcType=DECIMAL}
+        </if>
+        <if test="oneMonth != null" >
+          and one_month = #{oneMonth,jdbcType=DECIMAL}
+        </if>
+        <if test="sixMonth != null" >
+          and six_month = #{sixMonth,jdbcType=DECIMAL}
+        </if>
+        <if test="oneYear != null" >
+          and one_year = #{oneYear,jdbcType=DECIMAL}
+        </if>
+        <if test="twoYear != null" >
+          and two_year = #{twoYear,jdbcType=DECIMAL}
+        </if>
+        <if test="threeYear != null" >
+          and three_year = #{threeYear,jdbcType=DECIMAL}
+        </if>
+        <if test="fiveYear != null" >
+          and five_year = #{fiveYear,jdbcType=DECIMAL}
+        </if>
+        <if test="fromFounded != null" >
+          and from_founded = #{fromFounded,jdbcType=DECIMAL}
+        </if>
+        <if test="publishDate != null" >
+          and publish_date = #{publishDate,jdbcType=TIMESTAMP}
+        </if>
+        <if test="orgId != null" >
+          and org_id = #{orgId,jdbcType=VARCHAR}
+        </if>
+      </trim>
+    </where>
+    <if test="orderBy != null" >
+      order by ${orderBy}
+    </if>
+    <if test="start != null" >
+      limit ${start}, ${pageSize}
+    </if>
+  </sql>
+  <sql id="update_model_where_clause" >
+    <!--
+      WARNING - 根据model条件，更新的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <trim prefixOverrides="and" >
+        <if test="params.productId != null" >
+          and product_id = #{params.productId,jdbcType=VARCHAR}
+        </if>
+        <if test="params.thisYear != null" >
+          and this_year = #{params.thisYear,jdbcType=DECIMAL}
+        </if>
+        <if test="params.oneMonth != null" >
+          and one_month = #{params.oneMonth,jdbcType=DECIMAL}
+        </if>
+        <if test="params.sixMonth != null" >
+          and six_month = #{params.sixMonth,jdbcType=DECIMAL}
+        </if>
+        <if test="params.oneYear != null" >
+          and one_year = #{params.oneYear,jdbcType=DECIMAL}
+        </if>
+        <if test="params.twoYear != null" >
+          and two_year = #{params.twoYear,jdbcType=DECIMAL}
+        </if>
+        <if test="params.threeYear != null" >
+          and three_year = #{params.threeYear,jdbcType=DECIMAL}
+        </if>
+        <if test="params.fiveYear != null" >
+          and five_year = #{params.fiveYear,jdbcType=DECIMAL}
+        </if>
+        <if test="params.fromFounded != null" >
+          and from_founded = #{params.fromFounded,jdbcType=DECIMAL}
+        </if>
+        <if test="params.publishDate != null" >
+          and publish_date = #{params.publishDate,jdbcType=TIMESTAMP}
+        </if>
+        <if test="params.orgId != null" >
+          and org_id = #{params.orgId,jdbcType=VARCHAR}
+        </if>
+      </trim>
+    </where>
+  </sql>
+  <select id="queryForList" resultMap="productAchieveResultMap" parameterType="com.wocai.jrt.product.model.ProductAchieveBean" >
+    <!--
+      WARNING - 根据Criteria所携带条件查询数据，不含Blob字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from product_achieve
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="queryList" resultMap="productAchieveResultMap" parameterType="com.wocai.jrt.product.model.ProductAchieve" >
+    <!--
+      WARNING - 根据params所携带条件查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from product_achieve
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <select id="pagedForList" resultMap="productAchieveResultMap" parameterType="com.wocai.jrt.product.model.ProductAchieveBean" >
+    <!--
+      WARNING - 根据Criteria所携带条件分页查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from product_achieve
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="pagedList" resultMap="productAchieveResultMap" parameterType="com.wocai.jrt.product.model.ProductAchieve" >
+    <!--
+      WARNING - 根据params所携带条件分页查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from product_achieve
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <select id="get" resultMap="productAchieveResultMap" parameterType="java.lang.String" >
+    <!--
+      WARNING - 根据主键查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from product_achieve
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="unique" resultMap="productAchieveResultMap" parameterType="com.wocai.jrt.product.model.ProductAchieve" >
+    <!--
+      WARNING - 根据params所携带条件查询唯一记录。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from product_achieve
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <delete id="deleteById" parameterType="java.lang.String" >
+    <!--
+      WARNING - 根据主键删除记录。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    delete from product_achieve
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBatch" parameterType="com.wocai.jrt.product.model.ProductAchieveBean" >
+    <!--
+      WARNING - 根据Criteria所携带条件删除记录。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    delete from product_achieve
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <delete id="deleteBulks" parameterType="com.wocai.jrt.product.model.ProductAchieve" >
+    <!--
+      WARNING - 根据params所携带条件删除数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    delete from product_achieve
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </delete>
+  <insert id="save" parameterType="com.wocai.jrt.product.model.ProductAchieve" >
+    <!--
+      WARNING - 插入记录，只有非空字段才会插入到数据库。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    insert into product_achieve
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="thisYear != null" >
+        this_year,
+      </if>
+      <if test="oneMonth != null" >
+        one_month,
+      </if>
+      <if test="sixMonth != null" >
+        six_month,
+      </if>
+      <if test="oneYear != null" >
+        one_year,
+      </if>
+      <if test="twoYear != null" >
+        two_year,
+      </if>
+      <if test="threeYear != null" >
+        three_year,
+      </if>
+      <if test="fiveYear != null" >
+        five_year,
+      </if>
+      <if test="fromFounded != null" >
+        from_founded,
+      </if>
+      <if test="publishDate != null" >
+        publish_date,
+      </if>
+      <if test="orgId != null" >
+        org_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="thisYear != null" >
+        #{thisYear,jdbcType=DECIMAL},
+      </if>
+      <if test="oneMonth != null" >
+        #{oneMonth,jdbcType=DECIMAL},
+      </if>
+      <if test="sixMonth != null" >
+        #{sixMonth,jdbcType=DECIMAL},
+      </if>
+      <if test="oneYear != null" >
+        #{oneYear,jdbcType=DECIMAL},
+      </if>
+      <if test="twoYear != null" >
+        #{twoYear,jdbcType=DECIMAL},
+      </if>
+      <if test="threeYear != null" >
+        #{threeYear,jdbcType=DECIMAL},
+      </if>
+      <if test="fiveYear != null" >
+        #{fiveYear,jdbcType=DECIMAL},
+      </if>
+      <if test="fromFounded != null" >
+        #{fromFounded,jdbcType=DECIMAL},
+      </if>
+      <if test="publishDate != null" >
+        #{publishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="count" parameterType="com.wocai.jrt.product.model.ProductAchieveBean" resultType="java.lang.Integer" >
+    <!--
+      WARNING - 根据Criteria所携带条件进行count计数。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select count(*) from product_achieve
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="countBy" parameterType="com.wocai.jrt.product.model.ProductAchieve" resultType="java.lang.Integer" >
+    <!--
+      WARNING - 根据params所携带条件计数。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select count(*) from product_achieve
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <update id="updateBatch" parameterType="map" >
+    <!--
+      WARNING - 根据Criteria所携带条件更新指定字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    update product_achieve
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productId != null" >
+        product_id = #{record.productId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thisYear != null" >
+        this_year = #{record.thisYear,jdbcType=DECIMAL},
+      </if>
+      <if test="record.oneMonth != null" >
+        one_month = #{record.oneMonth,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sixMonth != null" >
+        six_month = #{record.sixMonth,jdbcType=DECIMAL},
+      </if>
+      <if test="record.oneYear != null" >
+        one_year = #{record.oneYear,jdbcType=DECIMAL},
+      </if>
+      <if test="record.twoYear != null" >
+        two_year = #{record.twoYear,jdbcType=DECIMAL},
+      </if>
+      <if test="record.threeYear != null" >
+        three_year = #{record.threeYear,jdbcType=DECIMAL},
+      </if>
+      <if test="record.fiveYear != null" >
+        five_year = #{record.fiveYear,jdbcType=DECIMAL},
+      </if>
+      <if test="record.fromFounded != null" >
+        from_founded = #{record.fromFounded,jdbcType=DECIMAL},
+      </if>
+      <if test="record.publishDate != null" >
+        publish_date = #{record.publishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orgId != null" >
+        org_id = #{record.orgId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateBulks" parameterType="map" >
+    <!--
+      WARNING - 根据params所携带条件更新指定字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    update product_achieve
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productId != null" >
+        product_id = #{record.productId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thisYear != null" >
+        this_year = #{record.thisYear,jdbcType=DECIMAL},
+      </if>
+      <if test="record.oneMonth != null" >
+        one_month = #{record.oneMonth,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sixMonth != null" >
+        six_month = #{record.sixMonth,jdbcType=DECIMAL},
+      </if>
+      <if test="record.oneYear != null" >
+        one_year = #{record.oneYear,jdbcType=DECIMAL},
+      </if>
+      <if test="record.twoYear != null" >
+        two_year = #{record.twoYear,jdbcType=DECIMAL},
+      </if>
+      <if test="record.threeYear != null" >
+        three_year = #{record.threeYear,jdbcType=DECIMAL},
+      </if>
+      <if test="record.fiveYear != null" >
+        five_year = #{record.fiveYear,jdbcType=DECIMAL},
+      </if>
+      <if test="record.fromFounded != null" >
+        from_founded = #{record.fromFounded,jdbcType=DECIMAL},
+      </if>
+      <if test="record.publishDate != null" >
+        publish_date = #{record.publishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orgId != null" >
+        org_id = #{record.orgId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="update_model_where_clause" />
+    </if>
+  </update>
+  <update id="updateById" parameterType="com.wocai.jrt.product.model.ProductAchieve" >
+    <!--
+      WARNING - 根据主键更新指定字段的数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    update product_achieve
+    <set >
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="thisYear != null" >
+        this_year = #{thisYear,jdbcType=DECIMAL},
+      </if>
+      <if test="oneMonth != null" >
+        one_month = #{oneMonth,jdbcType=DECIMAL},
+      </if>
+      <if test="sixMonth != null" >
+        six_month = #{sixMonth,jdbcType=DECIMAL},
+      </if>
+      <if test="oneYear != null" >
+        one_year = #{oneYear,jdbcType=DECIMAL},
+      </if>
+      <if test="twoYear != null" >
+        two_year = #{twoYear,jdbcType=DECIMAL},
+      </if>
+      <if test="threeYear != null" >
+        three_year = #{threeYear,jdbcType=DECIMAL},
+      </if>
+      <if test="fiveYear != null" >
+        five_year = #{fiveYear,jdbcType=DECIMAL},
+      </if>
+      <if test="fromFounded != null" >
+        from_founded = #{fromFounded,jdbcType=DECIMAL},
+      </if>
+      <if test="publishDate != null" >
+        publish_date = #{publishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgId != null" >
+        org_id = #{orgId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

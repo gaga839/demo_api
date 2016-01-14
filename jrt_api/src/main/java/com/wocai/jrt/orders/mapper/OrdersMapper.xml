@@ -1,0 +1,1313 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wocai.jrt.orders.dao.OrdersDao">
+	<resultMap id="ordersResultMap" type="com.wocai.jrt.orders.model.Orders">
+		<!-- WARNING - 结果集映射，不含Blob字段。 MyBatis代码工具自动生成，不要修改！ -->
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="order_id" property="orderId" jdbcType="VARCHAR" />
+		<result column="investor_id" property="investorId" jdbcType="VARCHAR" />
+		<result column="product_id" property="productId" jdbcType="VARCHAR" />
+		<result column="product_name" property="productName" jdbcType="VARCHAR" />
+		<result column="product_brief_name" property="productBriefName"
+			jdbcType="VARCHAR" />
+		<result column="order_amount" property="orderAmount" jdbcType="DECIMAL" />
+		<result column="employee_id" property="employeeId" jdbcType="VARCHAR" />
+		<result column="employee_name" property="employeeName"
+			jdbcType="VARCHAR" />
+		<result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+		<result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+		<result column="pad_id" property="padId" jdbcType="VARCHAR" />
+		<result column="pos_id" property="posId" jdbcType="VARCHAR" />
+		<result column="org_id" property="orgId" jdbcType="VARCHAR" />
+		<result column="paid_amount" property="paidAmount" jdbcType="DECIMAL" />
+		<result column="idcard_front" property="idcardFront" jdbcType="VARCHAR" />
+		<result column="idcard_back" property="idcardBack" jdbcType="VARCHAR" />
+		<result column="contact_sign_manager" property="contactSignManager"
+			jdbcType="VARCHAR" />
+		<result column="contact_sign_user" property="contactSignUser"
+			jdbcType="VARCHAR" />
+		<result column="pay_sign_manager" property="paySignManager"
+			jdbcType="VARCHAR" />
+		<result column="pay_sign_user" property="paySignUser" jdbcType="VARCHAR" />
+		<result column="video_user" property="videoUser" jdbcType="VARCHAR" />
+		<result column="video_manager" property="videoManager"
+			jdbcType="VARCHAR" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+		<result column="bank_deposit" property="bankDeposit" jdbcType="VARCHAR" />
+		<result column="bank_account" property="bankAccount" jdbcType="VARCHAR" />
+		<result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+		<result column="handling_fee" property="handlingFee" jdbcType="DECIMAL" />
+		<result column="sub_fee" property="subFee" jdbcType="DECIMAL" />
+		<result column="order_all_amount" property="orderAllAmount" jdbcType="DECIMAL" />
+		<!-- 2015 12-10增加字段 -->
+		<result column="type" property="type" jdbcType="INTEGER" />
+		<result column="contact_num" property="contactNum" jdbcType="VARCHAR" />
+		<result column="upload_voucher" property="uploadVoucher" jdbcType="BIT" />
+		<result column="audit_state" property="auditState" jdbcType="INTEGER" />
+		<result column="offline_pay" property="offlinePay" jdbcType="BIT" />
+		<result column="pay_method" property="payMethod" jdbcType="INTEGER" />
+		<result column="offline_audit" property="offlineAudit" jdbcType="INTEGER" />
+		<result column="agent_id" property="agentId" jdbcType="VARCHAR" />
+        <result column="deleted" property="deleted" jdbcType="BIT" />
+        <result column="grade_id" property="gradeId" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+
+	<sql id="Base_Column_List">
+		<!-- WARNING - 该表所有字段。 MyBatis代码工具自动生成，不要修改！ -->
+		id, order_id, investor_id, product_id, product_name,
+		product_brief_name, order_amount,
+		employee_id, employee_name,
+		order_time, pay_time, pad_id, pos_id, org_id,
+		paid_amount,
+		idcard_front, idcard_back, contact_sign_manager, contact_sign_user,
+		pay_sign_manager,
+		pay_sign_user, video_user, video_manager, state,
+		bank_deposit, bank_account,
+		bank_name,handling_fee,sub_fee,order_all_amount,
+		type,contact_num,upload_voucher,audit_state,offline_pay,pay_method,offline_audit,agent_id,deleted,grade_id
+	</sql>
+
+	<sql id="Example_Where_Clause">
+		<!-- WARNING - Criteria条件查询的where语句。 MyBatis代码工具自动生成，不要修改！ -->
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+		<if test="orderBy != null">
+			order by ${orderBy}
+		</if>
+		<if test="start != null">
+			limit ${start}, ${pageSize}
+		</if>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<!-- WARNING - Criteria条件查询的where语句。 MyBatis代码工具自动生成，不要修改！ -->
+		<where>
+			<foreach collection="params.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="model_where_clause">
+		<!-- WARNING - 根据model条件，查询或更新的where语句。 MyBatis代码工具自动生成，不要修改！ -->
+		<where>
+			<trim prefixOverrides="and">
+				<if test="orderId != null">
+					and order_id = #{orderId,jdbcType=VARCHAR}
+				</if>
+				<if test="investorId != null">
+					and investor_id = #{investorId,jdbcType=VARCHAR}
+				</if>
+				<if test="productId != null">
+					and product_id = #{productId,jdbcType=VARCHAR}
+				</if>
+				<if test="productName != null">
+					and product_name = #{productName,jdbcType=VARCHAR}
+				</if>
+				<if test="productBriefName != null">
+					and product_brief_name =
+					#{productBriefName,jdbcType=VARCHAR}
+				</if>
+				<if test="orderAmount != null">
+					and order_amount = #{orderAmount,jdbcType=DECIMAL}
+				</if>
+				<if test="employeeId != null">
+					and employee_id = #{employeeId,jdbcType=VARCHAR}
+				</if>
+				<if test="employeeName != null">
+					and employee_name = #{employeeName,jdbcType=VARCHAR}
+				</if>
+				<if test="orderTime != null">
+					and order_time = #{orderTime,jdbcType=TIMESTAMP}
+				</if>
+				<if test="payTime != null">
+					and pay_time = #{payTime,jdbcType=TIMESTAMP}
+				</if>
+				<if test="padId != null">
+					and pad_id = #{padId,jdbcType=VARCHAR}
+				</if>
+				<if test="posId != null">
+					and pos_id = #{posId,jdbcType=VARCHAR}
+				</if>
+				<if test="orgId != null">
+					and org_id = #{orgId,jdbcType=VARCHAR}
+				</if>
+				<if test="paidAmount != null">
+					and paid_amount = #{paidAmount,jdbcType=DECIMAL}
+				</if>
+				<if test="idcardFront != null">
+					and idcard_front = #{idcardFront,jdbcType=VARCHAR}
+				</if>
+				<if test="idcardBack != null">
+					and idcard_back = #{idcardBack,jdbcType=VARCHAR}
+				</if>
+				<if test="contactSignManager != null">
+					and contact_sign_manager =
+					#{contactSignManager,jdbcType=VARCHAR}
+				</if>
+				<if test="contactSignUser != null">
+					and contact_sign_user =
+					#{contactSignUser,jdbcType=VARCHAR}
+				</if>
+				<if test="paySignManager != null">
+					and pay_sign_manager =
+					#{paySignManager,jdbcType=VARCHAR}
+				</if>
+				<if test="paySignUser != null">
+					and pay_sign_user = #{paySignUser,jdbcType=VARCHAR}
+				</if>
+				<if test="videoUser != null">
+					and video_user = #{videoUser,jdbcType=VARCHAR}
+				</if>
+				<if test="videoManager != null">
+					and video_manager = #{videoManager,jdbcType=VARCHAR}
+				</if>
+				<if test="state != null">
+					and state = #{state,jdbcType=INTEGER}
+				</if>
+				<if test="bankDeposit != null">
+					and bank_deposit = #{bankDeposit,jdbcType=VARCHAR}
+				</if>
+				<if test="bankAccount != null">
+					and bank_account = #{bankAccount,jdbcType=VARCHAR}
+				</if>
+				<if test="bankName != null">
+					and bank_name = #{bankName,jdbcType=VARCHAR}
+				</if>
+			</trim>
+		</where>
+		<if test="orderBy != null">
+			order by ${orderBy}
+		</if>
+		<if test="start != null">
+			limit ${start}, ${pageSize}
+		</if>
+	</sql>
+	<sql id="update_model_where_clause">
+		<!-- WARNING - 根据model条件，更新的where语句。 MyBatis代码工具自动生成，不要修改！ -->
+		<where>
+			<trim prefixOverrides="and">
+				<if test="params.orderId != null">
+					and order_id = #{params.orderId,jdbcType=VARCHAR}
+				</if>
+				<if test="params.investorId != null">
+					and investor_id = #{params.investorId,jdbcType=VARCHAR}
+				</if>
+				<if test="params.productId != null">
+					and product_id = #{params.productId,jdbcType=VARCHAR}
+				</if>
+				<if test="params.productName != null">
+					and product_name =
+					#{params.productName,jdbcType=VARCHAR}
+				</if>
+				<if test="params.productBriefName != null">
+					and product_brief_name =
+					#{params.productBriefName,jdbcType=VARCHAR}
+				</if>
+				<if test="params.orderAmount != null">
+					and order_amount =
+					#{params.orderAmount,jdbcType=DECIMAL}
+				</if>
+				<if test="params.employeeId != null">
+					and employee_id = #{params.employeeId,jdbcType=VARCHAR}
+				</if>
+				<if test="params.employeeName != null">
+					and employee_name =
+					#{params.employeeName,jdbcType=VARCHAR}
+				</if>
+				<if test="params.orderTime != null">
+					and order_time = #{params.orderTime,jdbcType=TIMESTAMP}
+				</if>
+				<if test="params.payTime != null">
+					and pay_time = #{params.payTime,jdbcType=TIMESTAMP}
+				</if>
+				<if test="params.padId != null">
+					and pad_id = #{params.padId,jdbcType=VARCHAR}
+				</if>
+				<if test="params.posId != null">
+					and pos_id = #{params.posId,jdbcType=VARCHAR}
+				</if>
+				<if test="params.orgId != null">
+					and org_id = #{params.orgId,jdbcType=VARCHAR}
+				</if>
+				<if test="params.paidAmount != null">
+					and paid_amount = #{params.paidAmount,jdbcType=DECIMAL}
+				</if>
+				<if test="params.idcardFront != null">
+					and idcard_front =
+					#{params.idcardFront,jdbcType=VARCHAR}
+				</if>
+				<if test="params.idcardBack != null">
+					and idcard_back = #{params.idcardBack,jdbcType=VARCHAR}
+				</if>
+				<if test="params.contactSignManager != null">
+					and contact_sign_manager =
+					#{params.contactSignManager,jdbcType=VARCHAR}
+				</if>
+				<if test="params.contactSignUser != null">
+					and contact_sign_user =
+					#{params.contactSignUser,jdbcType=VARCHAR}
+				</if>
+				<if test="params.paySignManager != null">
+					and pay_sign_manager =
+					#{params.paySignManager,jdbcType=VARCHAR}
+				</if>
+				<if test="params.paySignUser != null">
+					and pay_sign_user =
+					#{params.paySignUser,jdbcType=VARCHAR}
+				</if>
+				<if test="params.videoUser != null">
+					and video_user = #{params.videoUser,jdbcType=VARCHAR}
+				</if>
+				<if test="params.videoManager != null">
+					and video_manager =
+					#{params.videoManager,jdbcType=VARCHAR}
+				</if>
+				<if test="params.state != null">
+					and state = #{params.state,jdbcType=INTEGER}
+				</if>
+				<if test="params.bankDeposit != null">
+					and bank_deposit =
+					#{params.bankDeposit,jdbcType=VARCHAR}
+				</if>
+				<if test="params.bankAccount != null">
+					and bank_account =
+					#{params.bankAccount,jdbcType=VARCHAR}
+				</if>
+				<if test="params.bankName != null">
+					and bank_name = #{params.bankName,jdbcType=VARCHAR}
+				</if>
+				<if test="params.type != null">
+					and type = #{params.type,jdbcType=VARCHAR}
+				</if>
+				<if test="params.contactNum != null">
+					and contact_num = #{params.contactNum,jdbcType=VARCHAR}
+				</if>
+				<if test="params.uploadVoucher != null">
+					and upload_voucher = #{params.uploadVoucher,jdbcType=VARCHAR}
+				</if>
+				<if test="params.auditState != null">
+					and audit_state = #{params.auditState,jdbcType=VARCHAR}
+				</if>
+				<if test="params.offlinePay != null">
+					and offline_pay = #{params.offlinePay,jdbcType=VARCHAR}
+				</if>
+				<if test="params.payMethod != null">
+					and pay_method = #{params.payMethod,jdbcType=VARCHAR}
+				</if>
+				<if test="params.offlineAudit != null">
+					and offline_audit = #{params.offlineAudit,jdbcType=VARCHAR}
+				</if>
+				<if test="params.agentId != null">
+                    and agent_id = #{params.agentId,jdbcType=VARCHAR}
+                </if>
+                <if test="params.deleted != null">
+                    and deleted = #{params.deleted,jdbcType=BIT}
+                </if>
+                <if test="params.gradeId != null">
+                    and grade_id = #{params.gradeId,jdbcType=VARCHAR}
+                </if>
+			</trim>
+		</where>
+	</sql>
+	<select id="queryForList" resultMap="ordersResultMap"
+		parameterType="com.wocai.jrt.orders.model.OrdersBean">
+		<!-- WARNING - 根据Criteria所携带条件查询数据，不含Blob字段。 MyBatis代码工具自动生成，不要修改！ -->
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from orders
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<select id="queryList" resultMap="ordersResultMap"
+		parameterType="com.wocai.jrt.orders.model.Orders">
+		<!-- WARNING - 根据params所携带条件查询数据。 MyBatis代码工具自动生成，不要修改！ -->
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from orders
+		<if test="_parameter != null">
+			<include refid="model_where_clause" />
+		</if>
+	</select>
+	<select id="pagedForList" resultMap="ordersResultMap"
+		parameterType="com.wocai.jrt.orders.model.OrdersBean">
+		<!-- WARNING - 根据Criteria所携带条件分页查询数据。 MyBatis代码工具自动生成，不要修改！ -->
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from orders
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<select id="pagedList" resultMap="ordersResultMap"
+		parameterType="com.wocai.jrt.orders.model.Orders">
+		<!-- WARNING - 根据params所携带条件分页查询数据。 MyBatis代码工具自动生成，不要修改！ -->
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from orders
+		<if test="_parameter != null">
+			<include refid="model_where_clause" />
+		</if>
+	</select>
+	<select id="get" resultMap="ordersResultMap" parameterType="java.lang.String">
+		<!-- WARNING - 根据主键查询数据。 MyBatis代码工具自动生成，不要修改！ -->
+		select
+		<include refid="Base_Column_List" />
+		from orders
+		where order_id = #{orderId,jdbcType=VARCHAR}
+	</select>
+	<select id="unique" resultMap="ordersResultMap"
+		parameterType="com.wocai.jrt.orders.model.Orders">
+		<!-- WARNING - 根据params所携带条件查询唯一记录。 MyBatis代码工具自动生成，不要修改！ -->
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from orders
+		<if test="_parameter != null">
+			<include refid="model_where_clause" />
+		</if>
+	</select>
+	<delete id="deleteById" parameterType="java.lang.String">
+		<!-- WARNING - 根据主键删除记录。 MyBatis代码工具自动生成，不要修改！ -->
+		delete from orders
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteBatch" parameterType="com.wocai.jrt.orders.model.OrdersBean">
+		<!-- WARNING - 根据Criteria所携带条件删除记录。 MyBatis代码工具自动生成，不要修改！ -->
+		delete from orders
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<delete id="deleteBulks" parameterType="com.wocai.jrt.orders.model.Orders">
+		<!-- WARNING - 根据params所携带条件删除数据。 MyBatis代码工具自动生成，不要修改！ -->
+		delete from orders
+		<if test="_parameter != null">
+			<include refid="model_where_clause" />
+		</if>
+	</delete>
+	<insert id="save" parameterType="com.wocai.jrt.orders.model.Orders">
+		<!-- WARNING - 插入记录，只有非空字段才会插入到数据库。 MyBatis代码工具自动生成，不要修改！ -->
+		insert into orders
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="orderId != null">
+				order_id,
+			</if>
+			<if test="investorId != null">
+				investor_id,
+			</if>
+			<if test="productId != null">
+				product_id,
+			</if>
+			<if test="productName != null">
+				product_name,
+			</if>
+			<if test="productBriefName != null">
+				product_brief_name,
+			</if>
+			<if test="orderAmount != null">
+				order_amount,
+			</if>
+			<if test="employeeId != null">
+				employee_id,
+			</if>
+			<if test="employeeName != null">
+				employee_name,
+			</if>
+			<if test="orderTime != null">
+				order_time,
+			</if>
+			<if test="payTime != null">
+				pay_time,
+			</if>
+			<if test="padId != null">
+				pad_id,
+			</if>
+			<if test="posId != null">
+				pos_id,
+			</if>
+			<if test="orgId != null">
+				org_id,
+			</if>
+			<if test="paidAmount != null">
+				paid_amount,
+			</if>
+			<if test="idcardFront != null">
+				idcard_front,
+			</if>
+			<if test="idcardBack != null">
+				idcard_back,
+			</if>
+			<if test="contactSignManager != null">
+				contact_sign_manager,
+			</if>
+			<if test="contactSignUser != null">
+				contact_sign_user,
+			</if>
+			<if test="paySignManager != null">
+				pay_sign_manager,
+			</if>
+			<if test="paySignUser != null">
+				pay_sign_user,
+			</if>
+			<if test="videoUser != null">
+				video_user,
+			</if>
+			<if test="videoManager != null">
+				video_manager,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+			<if test="bankDeposit != null">
+				bank_deposit,
+			</if>
+			<if test="bankAccount != null">
+				bank_account,
+			</if>
+			<if test="bankName != null">
+				bank_name,
+			</if>
+			<if test="handlingFee != null">
+				handling_fee,
+			</if>
+			<if test="subFee != null">
+				sub_fee,
+			</if>
+			<if test="orderAllAmount != null">
+				order_all_amount,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="contactNum != null">
+				contact_num,
+			</if>
+			<if test="uploadVoucher != null">
+				upload_voucher,
+			</if>
+			<if test="auditState != null">
+				audit_state,
+			</if>
+			<if test="offlinePay != null">
+				offline_pay,
+			</if>
+			<if test="payMethod != null">
+				pay_method,
+			</if>
+			<if test="offlineAudit != null">
+				offline_audit,
+			</if>
+			<if test="agentId != null">
+                agent_id,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="gradeId != null">
+                grade_id,
+            </if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="orderId != null">
+				#{orderId,jdbcType=VARCHAR},
+			</if>
+			<if test="investorId != null">
+				#{investorId,jdbcType=VARCHAR},
+			</if>
+			<if test="productId != null">
+				#{productId,jdbcType=VARCHAR},
+			</if>
+			<if test="productName != null">
+				#{productName,jdbcType=VARCHAR},
+			</if>
+			<if test="productBriefName != null">
+				#{productBriefName,jdbcType=VARCHAR},
+			</if>
+			<if test="orderAmount != null">
+				#{orderAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="employeeId != null">
+				#{employeeId,jdbcType=VARCHAR},
+			</if>
+			<if test="employeeName != null">
+				#{employeeName,jdbcType=VARCHAR},
+			</if>
+			<if test="orderTime != null">
+				#{orderTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="payTime != null">
+				#{payTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="padId != null">
+				#{padId,jdbcType=VARCHAR},
+			</if>
+			<if test="posId != null">
+				#{posId,jdbcType=VARCHAR},
+			</if>
+			<if test="orgId != null">
+				#{orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="paidAmount != null">
+				#{paidAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="idcardFront != null">
+				#{idcardFront,jdbcType=VARCHAR},
+			</if>
+			<if test="idcardBack != null">
+				#{idcardBack,jdbcType=VARCHAR},
+			</if>
+			<if test="contactSignManager != null">
+				#{contactSignManager,jdbcType=VARCHAR},
+			</if>
+			<if test="contactSignUser != null">
+				#{contactSignUser,jdbcType=VARCHAR},
+			</if>
+			<if test="paySignManager != null">
+				#{paySignManager,jdbcType=VARCHAR},
+			</if>
+			<if test="paySignUser != null">
+				#{paySignUser,jdbcType=VARCHAR},
+			</if>
+			<if test="videoUser != null">
+				#{videoUser,jdbcType=VARCHAR},
+			</if>
+			<if test="videoManager != null">
+				#{videoManager,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=INTEGER},
+			</if>
+			<if test="bankDeposit != null">
+				#{bankDeposit,jdbcType=VARCHAR},
+			</if>
+			<if test="bankAccount != null">
+				#{bankAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="bankName != null">
+				#{bankName,jdbcType=VARCHAR},
+			</if>
+			<if test="handlingFee != null">
+				#{handlingFee,jdbcType=DECIMAL},
+			</if>
+			<if test="subFee != null">
+				#{subFee,jdbcType=DECIMAL},
+			</if>
+			<if test="orderAllAmount != null">
+				#{orderAllAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=INTEGER},
+			</if>
+			<if test="contactNum != null">
+				#{contactNum,jdbcType=VARCHAR},
+			</if>
+			<if test="uploadVoucher != null">
+				#{uploadVoucher,jdbcType=BIT},
+			</if>
+			<if test="auditState != null">
+				#{auditState,jdbcType=INTEGER},
+			</if>
+			<if test="offlinePay != null">
+				#{offlinePay,jdbcType=BIT},
+			</if>
+			<if test="payMethod != null">
+				#{payMethod,jdbcType=INTEGER},
+			</if>
+			<if test="offlineAudit != null">
+				#{offlineAudit,jdbcType=INTEGER},
+			</if>
+			 <if test="agentId != null">
+                #{agentId,jdbcType=VARCHAR},
+            </if>
+             <if test="deleted != null">
+                #{deleted,jdbcType=BIT},
+            </if>
+             <if test="gradeId != null">
+                #{gradeId,jdbcType=VARCHAR},
+            </if>
+		</trim>
+	</insert>
+	<select id="countBy" parameterType="com.wocai.jrt.orders.model.Orders"
+		resultType="java.lang.Integer">
+		<!-- WARNING - 根据params所携带条件计数。 MyBatis代码工具自动生成，不要修改！ -->
+		select count(*) from orders
+		<if test="_parameter != null">
+			<include refid="model_where_clause" />
+		</if>
+	</select>
+	<update id="updateBatch" parameterType="map">
+		<!-- WARNING - 根据Criteria所携带条件更新指定字段。 MyBatis代码工具自动生成，不要修改！ -->
+		update orders
+		<set>
+			<if test="record.id != null">
+				id = #{record.id,jdbcType=VARCHAR},
+			</if>
+			<if test="record.orderId != null">
+				order_id = #{record.orderId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.investorId != null">
+				investor_id = #{record.investorId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.productId != null">
+				product_id = #{record.productId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.productName != null">
+				product_name = #{record.productName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.productBriefName != null">
+				product_brief_name =
+				#{record.productBriefName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.orderAmount != null">
+				order_amount = #{record.orderAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="record.employeeId != null">
+				employee_id = #{record.employeeId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.employeeName != null">
+				employee_name = #{record.employeeName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.orderTime != null">
+				order_time = #{record.orderTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.payTime != null">
+				pay_time = #{record.payTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.padId != null">
+				pad_id = #{record.padId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.posId != null">
+				pos_id = #{record.posId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.orgId != null">
+				org_id = #{record.orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.paidAmount != null">
+				paid_amount = #{record.paidAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="record.idcardFront != null">
+				idcard_front = #{record.idcardFront,jdbcType=VARCHAR},
+			</if>
+			<if test="record.idcardBack != null">
+				idcard_back = #{record.idcardBack,jdbcType=VARCHAR},
+			</if>
+			<if test="record.contactSignManager != null">
+				contact_sign_manager =
+				#{record.contactSignManager,jdbcType=VARCHAR},
+			</if>
+			<if test="record.contactSignUser != null">
+				contact_sign_user =
+				#{record.contactSignUser,jdbcType=VARCHAR},
+			</if>
+			<if test="record.paySignManager != null">
+				pay_sign_manager =
+				#{record.paySignManager,jdbcType=VARCHAR},
+			</if>
+			<if test="record.paySignUser != null">
+				pay_sign_user = #{record.paySignUser,jdbcType=VARCHAR},
+			</if>
+			<if test="record.videoUser != null">
+				video_user = #{record.videoUser,jdbcType=VARCHAR},
+			</if>
+			<if test="record.videoManager != null">
+				video_manager = #{record.videoManager,jdbcType=VARCHAR},
+			</if>
+			<if test="record.state != null">
+				state = #{record.state,jdbcType=INTEGER},
+			</if>
+			<if test="record.bankDeposit != null">
+				bank_deposit = #{record.bankDeposit,jdbcType=VARCHAR},
+			</if>
+			<if test="record.bankAccount != null">
+				bank_account = #{record.bankAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="record.bankName != null">
+				bank_name = #{record.bankName,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateBulks" parameterType="map">
+		<!-- WARNING - 根据params所携带条件更新指定字段。 MyBatis代码工具自动生成，不要修改！ -->
+		update orders
+		<set>
+			<if test="record.id != null">
+				id = #{record.id,jdbcType=VARCHAR},
+			</if>
+			<if test="record.orderId != null">
+				order_id = #{record.orderId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.investorId != null">
+				investor_id = #{record.investorId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.productId != null">
+				product_id = #{record.productId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.productName != null">
+				product_name = #{record.productName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.productBriefName != null">
+				product_brief_name =
+				#{record.productBriefName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.orderAmount != null">
+				order_amount = #{record.orderAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="record.employeeId != null">
+				employee_id = #{record.employeeId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.employeeName != null">
+				employee_name = #{record.employeeName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.orderTime != null">
+				order_time = #{record.orderTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.payTime != null">
+				pay_time = #{record.payTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.padId != null">
+				pad_id = #{record.padId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.posId != null">
+				pos_id = #{record.posId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.orgId != null">
+				org_id = #{record.orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.paidAmount != null">
+				paid_amount = #{record.paidAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="record.idcardFront != null">
+				idcard_front = #{record.idcardFront,jdbcType=VARCHAR},
+			</if>
+			<if test="record.idcardBack != null">
+				idcard_back = #{record.idcardBack,jdbcType=VARCHAR},
+			</if>
+			<if test="record.contactSignManager != null">
+				contact_sign_manager =
+				#{record.contactSignManager,jdbcType=VARCHAR},
+			</if>
+			<if test="record.contactSignUser != null">
+				contact_sign_user =
+				#{record.contactSignUser,jdbcType=VARCHAR},
+			</if>
+			<if test="record.paySignManager != null">
+				pay_sign_manager =
+				#{record.paySignManager,jdbcType=VARCHAR},
+			</if>
+			<if test="record.paySignUser != null">
+				pay_sign_user = #{record.paySignUser,jdbcType=VARCHAR},
+			</if>
+			<if test="record.videoUser != null">
+				video_user = #{record.videoUser,jdbcType=VARCHAR},
+			</if>
+			<if test="record.videoManager != null">
+				video_manager = #{record.videoManager,jdbcType=VARCHAR},
+			</if>
+			<if test="record.state != null">
+				state = #{record.state,jdbcType=INTEGER},
+			</if>
+			<if test="record.bankDeposit != null">
+				bank_deposit = #{record.bankDeposit,jdbcType=VARCHAR},
+			</if>
+			<if test="record.bankAccount != null">
+				bank_account = #{record.bankAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="record.bankName != null">
+				bank_name = #{record.bankName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.uploadVoucher != null">
+				upload_voucher = #{record.uploadVoucher,jdbcType=VARCHAR},
+			</if>
+			<if test="record.auditState != null">
+				audit_state = #{record.auditState,jdbcType=VARCHAR},
+			</if>
+			<if test="record.offlinePay != null">
+				offline_pay = #{record.offlinePay,jdbcType=VARCHAR},
+			</if>
+			<if test="record.payMethod != null">
+				pay_method = #{record.payMethod,jdbcType=VARCHAR},
+			</if>
+			<if test="record.offlineAudit != null">
+				offline_audit = #{record.offlineAudit,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="update_model_where_clause" />
+		</if>
+	</update>
+	<update id="updateById" parameterType="com.wocai.jrt.orders.model.Orders">
+		<!-- WARNING - 根据主键更新指定字段的数据。 MyBatis代码工具自动生成，不要修改！ -->
+		update orders
+		<set>
+			<if test="orderId != null">
+				order_id = #{orderId,jdbcType=VARCHAR},
+			</if>
+			<if test="investorId != null">
+				investor_id = #{investorId,jdbcType=VARCHAR},
+			</if>
+			<if test="productId != null">
+				product_id = #{productId,jdbcType=VARCHAR},
+			</if>
+			<if test="productName != null">
+				product_name = #{productName,jdbcType=VARCHAR},
+			</if>
+			<if test="productBriefName != null">
+				product_brief_name =
+				#{productBriefName,jdbcType=VARCHAR},
+			</if>
+			<if test="orderAmount != null">
+				order_amount = #{orderAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="employeeId != null">
+				employee_id = #{employeeId,jdbcType=VARCHAR},
+			</if>
+			<if test="employeeName != null">
+				employee_name = #{employeeName,jdbcType=VARCHAR},
+			</if>
+			<if test="orderTime != null">
+				order_time = #{orderTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="payTime != null">
+				pay_time = #{payTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="padId != null">
+				pad_id = #{padId,jdbcType=VARCHAR},
+			</if>
+			<if test="posId != null">
+				pos_id = #{posId,jdbcType=VARCHAR},
+			</if>
+			<if test="orgId != null">
+				org_id = #{orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="paidAmount != null">
+				paid_amount = #{paidAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="idcardFront != null">
+				idcard_front = #{idcardFront,jdbcType=VARCHAR},
+			</if>
+			<if test="idcardBack != null">
+				idcard_back = #{idcardBack,jdbcType=VARCHAR},
+			</if>
+			<if test="contactSignManager != null">
+				contact_sign_manager =
+				#{contactSignManager,jdbcType=VARCHAR},
+			</if>
+			<if test="contactSignUser != null">
+				contact_sign_user = #{contactSignUser,jdbcType=VARCHAR},
+			</if>
+			<if test="paySignManager != null">
+				pay_sign_manager = #{paySignManager,jdbcType=VARCHAR},
+			</if>
+			<if test="paySignUser != null">
+				pay_sign_user = #{paySignUser,jdbcType=VARCHAR},
+			</if>
+			<if test="videoUser != null">
+				video_user = #{videoUser,jdbcType=VARCHAR},
+			</if>
+			<if test="videoManager != null">
+				video_manager = #{videoManager,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=INTEGER},
+			</if>
+			<if test="bankDeposit != null">
+				bank_deposit = #{bankDeposit,jdbcType=VARCHAR},
+			</if>
+			<if test="bankAccount != null">
+				bank_account = #{bankAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="bankName != null">
+				bank_name = #{bankName,jdbcType=VARCHAR},
+			</if>
+			<if test="handlingFee != null">
+				handling_fee = #{handlingFee,jdbcType=DECIMAL},
+			</if>
+			<if test="subFee != null">
+				sub_fee = #{subFee,jdbcType=DECIMAL},
+			</if>
+			<if test="orderAllAmount != null">
+				order_all_amount = #{orderAllAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="contactNum != null">
+				contact_num = #{contactNum,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=VARCHAR},
+			</if>
+			<if test="uploadVoucher != null">
+				upload_voucher = #{uploadVoucher,jdbcType=VARCHAR},
+			</if>
+			<if test="auditState != null">
+				audit_state = #{auditState,jdbcType=VARCHAR},
+			</if>
+			<if test="offlinePay != null">
+				offline_pay = #{offlinePay,jdbcType=VARCHAR},
+			</if>
+			<if test="payMethod != null">
+				pay_method = #{payMethod,jdbcType=VARCHAR},
+			</if>
+			<if test="offlineAudit != null">
+				offline_audit = #{offlineAudit,jdbcType=VARCHAR},
+			</if>
+			<if test="agentId != null and agentId != '' ">
+                agent_id = #{agentId,jdbcType=VARCHAR},
+            </if>
+            <if test="agentId == '' ">
+                agent_id = null,
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=BIT},
+            </if>
+            <if test="gradeId != null">
+                grade_id = #{gradeId,jdbcType=VARCHAR}
+            </if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+
+	<resultMap id="ordersResBeanResultMap" type="com.wocai.jrt.orders.bean.OrdersResBean">
+		<id column="order_id" property="id" jdbcType="VARCHAR" />
+		<result column="employee_id" property="employeeId" jdbcType="VARCHAR" />
+		<result column="employee_name" property="employeeName" jdbcType="VARCHAR" />
+		<result column="investor_id" property="investorId" jdbcType="VARCHAR" />
+		<result column="product_id" property="productId" jdbcType="VARCHAR" />
+		<result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+		<result column="product_name" property="productName" jdbcType="VARCHAR" />
+		<result column="product_brief_name" property="briefName" jdbcType="VARCHAR" />
+		<result column="order_amount" property="orderAmount" jdbcType="DECIMAL" />
+		<result column="org_id" property="orgId" jdbcType="VARCHAR" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+		<result column="investor_name" property="investorName" jdbcType="VARCHAR" />
+		<result column="commission_rate" property="commission"
+			jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="ordersDetailBeanResultMap" type="com.wocai.jrt.orders.bean.OrderDetailBean">
+		<id column="order_id" property="id" jdbcType="VARCHAR" />
+		<result column="investor_id" property="investorId" jdbcType="VARCHAR" />
+		<result column="investor_name" property="investorName" jdbcType="VARCHAR" />
+		<result column="order_amount" property="orderAmount" jdbcType="DECIMAL" />
+		<result column="gender" property="gender" jdbcType="INTEGER" />
+		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+		<result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+		<result column="idcard" property="idCard" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="video_user" property="videoUser" jdbcType="VARCHAR" />
+		<result column="video_manager" property="videoManager"
+			jdbcType="VARCHAR" />
+		<result column="idcard_front" property="idcardFront" jdbcType="VARCHAR" />
+		<result column="idcard_back" property="idcardBack" jdbcType="VARCHAR" />
+		<result column="contact_sign_manager" property="contactSignManager"
+			jdbcType="VARCHAR" />
+		<result column="contact_sign_user" property="contactSignUser"
+			jdbcType="VARCHAR" />
+		<result column="pay_sign_manager" property="paySignManager"
+			jdbcType="VARCHAR" />
+		<result column="pay_sign_user" property="paySignUser" jdbcType="VARCHAR" />
+		<result column="state" property="state" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="prospective_earnings" property="prospectiveEarnings"
+			jdbcType="DECIMAL" />
+		<result column="thumbnail" property="thumbnail" jdbcType="VARCHAR"/>	
+	</resultMap>
+
+	<!-- 根据团队长查询其下员工所有订单 -->
+	<select id="leader" resultMap="ordersResBeanResultMap"
+		parameterType="com.wocai.jrt.orders.bean.OrdersReqBean">
+		select
+		o.order_id,o.order_time,p.product_name,p.brief_name as product_brief_name,o.order_amount,o.state,o.employee_id,i.name
+		as investor_name,e.name as employee_name
+		from
+		orders o,investor i,employee e,product p
+		where o.investor_id = i.id
+		and o.employee_id = e.employee_id
+		and o.product_id = p.id
+		and o.deleted = 0
+		and e.state = 1
+		and e.dept_id = #{groupId}
+		and e.org_id = #{orgId}
+		<if test="employeeKey != null">
+			and (e.name like #{employeeKey}"%" or e.employee_no
+			like
+			#{employeeKey}"%" or e.mobile like #{employeeKey}"%")
+		</if>
+		<if test="investorKey != null">
+			and (i.name like #{investorKey}"%" or i.mobile like
+			#{investorKey}"%" or i.idcard like #{investorKey}"%")
+		</if>
+		<if test="state != null">
+			and o.state = #{state}
+		</if>
+		<if test="start != null">
+			and o.order_time >= #{start}
+		</if>
+		<if test="end != null">
+			and o.order_time &lt; #{end}
+		</if>
+		<if test="orderBy != null">
+			order by ${orderBy}
+		</if>
+		<if test="page != null">
+			limit #{page} ,#{pageSize}
+		</if>
+	</select>
+
+	<!-- 订单统计 -->
+	<select id="count" resultMap="ordersResBeanResultMap"
+		parameterType="com.wocai.jrt.orders.bean.OrdersReqBean">
+		select
+		o.order_id,o.employee_id,o.investor_id,o.product_id,o.order_time,o.product_name,o.order_amount,o.org_id,o.state,e.commission_rate
+		from orders o
+		left join (employee_commission e) on (
+		o.employee_id = e.employee_id and
+		o.product_id = e.product_id)
+		where o.employee_id =
+		#{employeeId,jdbcType=VARCHAR}
+		and deleted = 0
+		<if test="start != null">
+			and o.order_time >= #{start,jdbcType=VARCHAR}
+		</if>
+		<if test="orgId != null">
+			and o.org_id = #{orgId,jdbcType=VARCHAR}
+		</if>
+		<if test="end != null">
+			and o.order_time &lt; #{end,jdbcType=VARCHAR}
+		</if>
+	</select>
+
+	<!-- 订单详情 -->
+	<select id="detail" resultMap="ordersDetailBeanResultMap"
+	parameterType="com.wocai.jrt.orders.bean.OrdersReqBean">
+		select
+		o.order_id,o.investor_id,o.order_amount,o.paid_amount,o.idcard_front,o.idcard_back,o.contact_sign_manager,o.contact_sign_user,
+		o.pay_sign_manager,o.pay_sign_user,o.video_user,o.video_manager,o.state,i.gender,i.mobile,i.birthday,i.idcard,i.email,i.name as investor_name,
+		p.type,p.prospective_earnings,p.thumbnail
+		from orders o,product p,investor i
+		where
+		o.order_id = #{orderId,jdbcType=VARCHAR}
+		and p.id = o.product_id
+		and i.id = o.investor_id
+	</select>
+	<!-- 检索订单 -->
+	<select id="factor" resultMap="ordersResBeanResultMap"
+		parameterType="com.wocai.jrt.orders.bean.OrdersReqBean">
+		select
+		o.order_id,o.employee_id,o.investor_id,o.product_id,o.order_time,o.product_name,o.product_brief_name,o.order_amount,o.org_id,o.state,i.name as investor_name
+		from orders o, investor i, product p
+		where (o.employee_id =#{employeeId,jdbcType=VARCHAR} or o.agent_id =#{employeeId,jdbcType=VARCHAR})
+		and o.investor_id = i.id
+		and o.product_id = p.id
+		<if test="investorKey != null">
+			and (i.mobile like#{investorKey ,jdbcType=VARCHAR}"%"
+			or i.idcard like #{investorKey,jdbcType=VARCHAR}"%"
+			or i.name like
+			#{investorKey ,jdbcType=VARCHAR}"%")
+		</if>
+		<if test="productKey != null">
+			and (p.brief_name like
+			#{productKey,jdbcType=VARCHAR}"%"
+			or p.product_code like
+			#{productKey,jdbcType=VARCHAR}"%")
+		</if>
+		<if test="orgId != null">
+			and o.org_id = #{orgId,jdbcType=VARCHAR}
+		</if>
+		<if test="start != null">
+			and o.order_time >= #{start,jdbcType=VARCHAR}
+		</if>
+		<if test="end != null">
+			and o.order_time &lt; #{end,jdbcType=VARCHAR}
+		</if>
+		<if test="state != null">
+			and o.state = #{state,jdbcType=VARCHAR}
+		</if>
+		<if test="deleted != null">
+			and o.deleted = #{deleted,jdbcType=BIT}
+		</if>
+		<if test="orderBy != null">
+			order by ${orderBy}
+		</if>
+		<if test="page != null">
+			limit ${page}, ${pageSize}
+		</if>
+	</select>
+
+	<!-- 根据投资人id查询其订单 -->
+	<select id="investor" resultMap="ordersResBeanResultMap"
+		parameterType="com.wocai.jrt.orders.model.Orders">
+		select
+		o.order_id,o.employee_id,o.employee_name,o.product_id,o.order_time,o.product_name,o.product_brief_name,o.order_amount,o.org_id,o.state
+		from orders o
+		where o.investor_id =
+		#{investorId,jdbcType=VARCHAR}
+		<if test="start != null">
+			and o.order_time >= #{start,jdbcType=VARCHAR}
+		</if>
+		<if test="end != null">
+			and o.order_time &lt; #{end,jdbcType=VARCHAR}
+		</if>
+		<if test="orderBy != null">
+			order by ${orderBy}
+		</if>
+		<if test="page != null">
+			limit ${page}, ${pageSize}
+		</if>
+	</select>
+
+	<resultMap id="employeeGroupAmountMap"
+		type="com.wocai.jrt.orders.bean.EmployeeGroupAmountBean">
+		<result column="employee_id" property="employeeId" jdbcType="VARCHAR" />
+		<result column="order_amount" property="employeeGroupAmount"
+			jdbcType="DECIMAL" />
+	</resultMap>
+
+	<select id="queryEmployeeGroupAmount" resultMap="employeeGroupAmountMap"
+		parameterType="com.wocai.jrt.orders.bean.EmployeeGroupAmountReqBean">
+		SELECT
+		orders.employee_id AS employee_id,
+		Sum(orders.order_amount) AS
+		order_amount
+		FROM
+		orders ,
+		group_member
+		WHERE
+		group_member.employee_id =
+		orders.employee_id AND
+		group_member.group_id
+		= #{groupId,jdbcType=VARCHAR}
+		AND orders.order_time BETWEEN #{beginDate}
+		and
+		#{endDate}
+		and orders.state = 6
+		GROUP
+		BY
+		orders.employee_id
+	</select>
+	<select id="getMyGroupInvestorOrders" resultMap="ordersResultMap"
+		parameterType="com.wocai.jrt.employee.bean.GetGroupTotalBean">
+		SELECT
+		orders.id
+		FROM
+		orders
+		WHERE
+		orders.investor_id IN(
+			SELECT
+				i.id
+				FROM
+				investor AS i,
+				employee AS e
+			WHERE
+				i.employee_id = e.employee_id
+				AND e.dept_id = #{groupId}
+				AND i.register_time >= #{startDate} 
+				AND i.register_time &lt;= #{endDate} 
+				AND i.deleted = 0) 
+		AND orders.order_time >= #{startDateOrders} 
+		AND orders.order_time &lt;= #{endDateOrders}
+	</select>
+	 <!-- 检索某产品的所有订单 -->
+  <select id="history"  resultMap="ordersResBeanResultMap" parameterType="com.wocai.jrt.orders.bean.OrdersReqBean"> 
+  	select  
+  		o.order_id, i.name as investor_name, o.order_amount, o.order_time, o.state,o.employee_id
+		from orders o,investor i
+		where o.product_id = #{productId,jdbcType=VARCHAR}
+		and o.investor_id = i.id
+		<if test="start != null">
+			and o.order_time >= #{start,jdbcType=VARCHAR}
+		</if>
+		<if test="end != null">
+			and o.order_time  &lt;= #{end,jdbcType=VARCHAR}
+		</if>
+		<if test="state != null">
+			and o.state = #{state,jdbcType=VARCHAR}
+		</if>
+		order by o.order_time desc
+		<if test="page != null">
+			limit ${page}, ${pageSize}
+		</if>
+  </select> 
+  
+  <!-- 订单删除 -->
+  <update id="deleteOrders">
+  	update orders set deleted = 1 where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+</mapper>

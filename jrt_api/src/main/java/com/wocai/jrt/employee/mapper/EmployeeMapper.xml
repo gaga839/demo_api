@@ -1,0 +1,758 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wocai.jrt.employee.dao.EmployeeDao">
+	<resultMap id="employeeResultMap" type="com.wocai.jrt.employee.model.Employee">
+		<!-- WARNING - 结果集映射，不含Blob字段。 MyBatis代码工具自动生成，不要修改！ -->
+		<id column="employee_id" property="employeeId" jdbcType="VARCHAR" />
+		<result column="account" property="account" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="gender" property="gender" jdbcType="INTEGER" />
+		<result column="department" property="department" jdbcType="VARCHAR" />
+		<result column="position" property="position" jdbcType="VARCHAR" />
+		<result column="login_pwd" property="loginPwd" jdbcType="VARCHAR" />
+		<result column="work_pwd" property="workPwd" jdbcType="VARCHAR" />
+		<result column="pos_pad_id" property="posPadId" jdbcType="VARCHAR" />
+		<result column="org_id" property="orgId" jdbcType="VARCHAR" />
+		<result column="planner" property="planner" jdbcType="BIT" />
+		<result column="avatar" property="avatar" jdbcType="VARCHAR" />
+		<result column="admin" property="admin" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="employee_no" property="employeeNo" jdbcType="VARCHAR" />
+		<result column="entry_time" property="entryTime" jdbcType="TIMESTAMP" />
+		<result column="birthday" property="birthday" jdbcType="DATE" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="idcard" property="idcard" jdbcType="VARCHAR" />
+		<result column="dept_id" property="deptId" jdbcType="VARCHAR" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		<!-- WARNING - 该表所有字段。 MyBatis代码工具自动生成，不要修改！ -->
+		employee_id, account, name, mobile, email, gender, department,
+		position, login_pwd,
+		work_pwd, pos_pad_id, org_id, planner, avatar, admin, create_time, employee_no,
+		entry_time,
+		birthday, address, idcard, dept_id, state
+	</sql>
+	<sql id="Example_Where_Clause">
+		<!-- WARNING - Criteria条件查询的where语句。 MyBatis代码工具自动生成，不要修改！ -->
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+		<if test="orderBy != null">
+			order by ${orderBy}
+		</if>
+		<if test="start != null">
+			limit ${start}, ${pageSize}
+		</if>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<!-- WARNING - Criteria条件查询的where语句。 MyBatis代码工具自动生成，不要修改！ -->
+		<where>
+			<foreach collection="params.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="model_where_clause">
+		<!-- WARNING - 根据model条件，查询或更新的where语句。 MyBatis代码工具自动生成，不要修改！ -->
+		<where>
+			<trim prefixOverrides="and">
+				<if test="account != null">
+					and account = #{account,jdbcType=VARCHAR}
+				</if>
+				<if test="name != null">
+					and name = #{name,jdbcType=VARCHAR}
+				</if>
+				<if test="mobile != null">
+					and mobile = #{mobile,jdbcType=VARCHAR}
+				</if>
+				<if test="email != null">
+					and email = #{email,jdbcType=VARCHAR}
+				</if>
+				<if test="gender != null">
+					and gender = #{gender,jdbcType=INTEGER}
+				</if>
+				<if test="department != null">
+					and department = #{department,jdbcType=VARCHAR}
+				</if>
+				<if test="position != null">
+					and position = #{position,jdbcType=VARCHAR}
+				</if>
+				<if test="loginPwd != null">
+					and login_pwd = #{loginPwd,jdbcType=VARCHAR}
+				</if>
+				<if test="workPwd != null">
+					and work_pwd = #{workPwd,jdbcType=VARCHAR}
+				</if>
+				<if test="posPadId != null">
+					and pos_pad_id = #{posPadId,jdbcType=VARCHAR}
+				</if>
+				<if test="orgId != null">
+					and org_id = #{orgId,jdbcType=VARCHAR}
+				</if>
+				<if test="planner != null">
+					and planner = #{planner,jdbcType=BIT}
+				</if>
+				<if test="avatar != null">
+					and avatar = #{avatar,jdbcType=VARCHAR}
+				</if>
+				<if test="admin != null">
+					and admin = #{admin,jdbcType=INTEGER}
+				</if>
+				<if test="createTime != null">
+					and create_time = #{createTime,jdbcType=TIMESTAMP}
+				</if>
+				<if test="employeeNo != null">
+					and employee_no = #{employeeNo,jdbcType=VARCHAR}
+				</if>
+				<if test="entryTime != null">
+					and entry_time = #{entryTime,jdbcType=TIMESTAMP}
+				</if>
+				<if test="birthday != null">
+					and birthday = #{birthday,jdbcType=DATE}
+				</if>
+				<if test="address != null">
+					and address = #{address,jdbcType=VARCHAR}
+				</if>
+				<if test="idcard != null">
+					and idcard = #{idcard,jdbcType=VARCHAR}
+				</if>
+				<if test="idcard != null">
+					and dept_id = #{deptId,jdbcType=VARCHAR}
+				</if>
+			</trim>
+		</where>
+		<if test="orderBy != null">
+			order by ${orderBy}
+		</if>
+		<if test="start != null">
+			limit ${start}, ${pageSize}
+		</if>
+	</sql>
+	<sql id="update_model_where_clause">
+		<!-- WARNING - 根据model条件，更新的where语句。 MyBatis代码工具自动生成，不要修改！ -->
+		<where>
+			<trim prefixOverrides="and">
+				<if test="params.account != null">
+					and account = #{params.account,jdbcType=VARCHAR}
+				</if>
+				<if test="params.name != null">
+					and name = #{params.name,jdbcType=VARCHAR}
+				</if>
+				<if test="params.mobile != null">
+					and mobile = #{params.mobile,jdbcType=VARCHAR}
+				</if>
+				<if test="params.email != null">
+					and email = #{params.email,jdbcType=VARCHAR}
+				</if>
+				<if test="params.gender != null">
+					and gender = #{params.gender,jdbcType=INTEGER}
+				</if>
+				<if test="params.department != null">
+					and department = #{params.department,jdbcType=VARCHAR}
+				</if>
+				<if test="params.position != null">
+					and position = #{params.position,jdbcType=VARCHAR}
+				</if>
+				<if test="params.loginPwd != null">
+					and login_pwd = #{params.loginPwd,jdbcType=VARCHAR}
+				</if>
+				<if test="params.workPwd != null">
+					and work_pwd = #{params.workPwd,jdbcType=VARCHAR}
+				</if>
+				<if test="params.posPadId != null">
+					and pos_pad_id = #{params.posPadId,jdbcType=VARCHAR}
+				</if>
+				<if test="params.orgId != null">
+					and org_id = #{params.orgId,jdbcType=VARCHAR}
+				</if>
+				<if test="params.planner != null">
+					and planner = #{params.planner,jdbcType=BIT}
+				</if>
+				<if test="params.avatar != null">
+					and avatar = #{params.avatar,jdbcType=VARCHAR}
+				</if>
+				<if test="params.admin != null">
+					and admin = #{params.admin,jdbcType=INTEGER}
+				</if>
+				<if test="params.createTime != null">
+					and create_time = #{params.createTime,jdbcType=TIMESTAMP}
+				</if>
+				<if test="params.employeeNo != null">
+					and employee_no = #{params.employeeNo,jdbcType=VARCHAR}
+				</if>
+				<if test="params.entryTime != null">
+					and entry_time = #{params.entryTime,jdbcType=TIMESTAMP}
+				</if>
+				<if test="params.birthday != null">
+					and birthday = #{params.birthday,jdbcType=DATE}
+				</if>
+				<if test="params.address != null">
+					and address = #{params.address,jdbcType=VARCHAR}
+				</if>
+				<if test="params.idcard != null">
+					and idcard = #{params.idcard,jdbcType=VARCHAR}
+				</if>
+				<if test="params.idcard != null">
+					and dept_id = #{params.deptId,jdbcType=VARCHAR}
+				</if>
+			</trim>
+		</where>
+	</sql>
+	<select id="queryForList" resultMap="employeeResultMap"
+		parameterType="com.wocai.jrt.employee.model.EmployeeBean">
+		<!-- WARNING - 根据Criteria所携带条件查询数据，不含Blob字段。 MyBatis代码工具自动生成，不要修改！ -->
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from employee
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<select id="queryList" resultMap="employeeResultMap"
+		parameterType="com.wocai.jrt.employee.model.Employee">
+		<!-- WARNING - 根据params所携带条件查询数据。 MyBatis代码工具自动生成，不要修改！ -->
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from employee
+		<if test="_parameter != null">
+			<include refid="model_where_clause" />
+		</if>
+	</select>
+	<select id="pagedForList" resultMap="employeeResultMap"
+		parameterType="com.wocai.jrt.employee.model.EmployeeBean">
+		<!-- WARNING - 根据Criteria所携带条件分页查询数据。 MyBatis代码工具自动生成，不要修改！ -->
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from employee
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<select id="pagedList" resultMap="employeeResultMap"
+		parameterType="com.wocai.jrt.employee.model.Employee">
+		<!-- WARNING - 根据params所携带条件分页查询数据。 MyBatis代码工具自动生成，不要修改！ -->
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from employee
+		<if test="_parameter != null">
+			<include refid="model_where_clause" />
+		</if>
+	</select>
+	<select id="get" resultMap="employeeResultMap" parameterType="java.lang.String">
+		<!-- WARNING - 根据主键查询数据。 MyBatis代码工具自动生成，不要修改！ -->
+		select
+		<include refid="Base_Column_List" />
+		from employee
+		where employee_id = #{employeeId,jdbcType=VARCHAR}
+	</select>
+	<select id="unique" resultMap="employeeResultMap"
+		parameterType="com.wocai.jrt.employee.model.Employee">
+		<!-- WARNING - 根据params所携带条件查询唯一记录。 MyBatis代码工具自动生成，不要修改！ -->
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from employee
+		<if test="_parameter != null">
+			<include refid="model_where_clause" />
+		</if>
+	</select>
+	<delete id="deleteById" parameterType="java.lang.String">
+		<!-- WARNING - 根据主键删除记录。 MyBatis代码工具自动生成，不要修改！ -->
+		delete from employee
+		where employee_id = #{employeeId,jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteBatch" parameterType="com.wocai.jrt.employee.model.EmployeeBean">
+		<!-- WARNING - 根据Criteria所携带条件删除记录。 MyBatis代码工具自动生成，不要修改！ -->
+		delete from employee
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<delete id="deleteBulks" parameterType="com.wocai.jrt.employee.model.Employee">
+		<!-- WARNING - 根据params所携带条件删除数据。 MyBatis代码工具自动生成，不要修改！ -->
+		delete from employee
+		<if test="_parameter != null">
+			<include refid="model_where_clause" />
+		</if>
+	</delete>
+	<insert id="save" parameterType="com.wocai.jrt.employee.model.Employee">
+		<!-- WARNING - 插入记录，只有非空字段才会插入到数据库。 MyBatis代码工具自动生成，不要修改！ -->
+		insert into employee
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="employeeId != null">
+				employee_id,
+			</if>
+			<if test="account != null">
+				account,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="mobile != null">
+				mobile,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="gender != null">
+				gender,
+			</if>
+			<if test="department != null">
+				department,
+			</if>
+			<if test="position != null">
+				position,
+			</if>
+			<if test="loginPwd != null">
+				login_pwd,
+			</if>
+			<if test="workPwd != null">
+				work_pwd,
+			</if>
+			<if test="posPadId != null">
+				pos_pad_id,
+			</if>
+			<if test="orgId != null">
+				org_id,
+			</if>
+			<if test="planner != null">
+				planner,
+			</if>
+			<if test="avatar != null">
+				avatar,
+			</if>
+			<if test="admin != null">
+				admin,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="employeeNo != null">
+				employee_no,
+			</if>
+			<if test="entryTime != null">
+				entry_time,
+			</if>
+			<if test="birthday != null">
+				birthday,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="idcard != null">
+				idcard,
+			</if>
+			<if test="deptId != null">
+				dept_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="employeeId != null">
+				#{employeeId,jdbcType=VARCHAR},
+			</if>
+			<if test="account != null">
+				#{account,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null">
+				#{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="gender != null">
+				#{gender,jdbcType=INTEGER},
+			</if>
+			<if test="department != null">
+				#{department,jdbcType=VARCHAR},
+			</if>
+			<if test="position != null">
+				#{position,jdbcType=VARCHAR},
+			</if>
+			<if test="loginPwd != null">
+				#{loginPwd,jdbcType=VARCHAR},
+			</if>
+			<if test="workPwd != null">
+				#{workPwd,jdbcType=VARCHAR},
+			</if>
+			<if test="posPadId != null">
+				#{posPadId,jdbcType=VARCHAR},
+			</if>
+			<if test="orgId != null">
+				#{orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="planner != null">
+				#{planner,jdbcType=BIT},
+			</if>
+			<if test="avatar != null">
+				#{avatar,jdbcType=VARCHAR},
+			</if>
+			<if test="admin != null">
+				#{admin,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="employeeNo != null">
+				#{employeeNo,jdbcType=VARCHAR},
+			</if>
+			<if test="entryTime != null">
+				#{entryTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="birthday != null">
+				#{birthday,jdbcType=DATE},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="idcard != null">
+				#{idcard,jdbcType=VARCHAR},
+			</if>
+			<if test="deptId != null">
+				#{deptId,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="count" parameterType="com.wocai.jrt.employee.model.EmployeeBean"
+		resultType="java.lang.Integer">
+		<!-- WARNING - 根据Criteria所携带条件进行count计数。 MyBatis代码工具自动生成，不要修改！ -->
+		select count(*) from employee
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<select id="countBy" parameterType="com.wocai.jrt.employee.model.Employee"
+		resultType="java.lang.Integer">
+		<!-- WARNING - 根据params所携带条件计数。 MyBatis代码工具自动生成，不要修改！ -->
+		select count(*) from employee
+		<if test="_parameter != null">
+			<include refid="model_where_clause" />
+		</if>
+	</select>
+	<update id="updateBatch" parameterType="map">
+		<!-- WARNING - 根据Criteria所携带条件更新指定字段。 MyBatis代码工具自动生成，不要修改！ -->
+		update employee
+		<set>
+			<if test="record.employeeId != null">
+				employee_id = #{record.employeeId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.account != null">
+				account = #{record.account,jdbcType=VARCHAR},
+			</if>
+			<if test="record.name != null">
+				name = #{record.name,jdbcType=VARCHAR},
+			</if>
+			<if test="record.mobile != null">
+				mobile = #{record.mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="record.email != null">
+				email = #{record.email,jdbcType=VARCHAR},
+			</if>
+			<if test="record.gender != null">
+				gender = #{record.gender,jdbcType=INTEGER},
+			</if>
+			<if test="record.department != null">
+				department = #{record.department,jdbcType=VARCHAR},
+			</if>
+			<if test="record.position != null">
+				position = #{record.position,jdbcType=VARCHAR},
+			</if>
+			<if test="record.loginPwd != null">
+				login_pwd = #{record.loginPwd,jdbcType=VARCHAR},
+			</if>
+			<if test="record.workPwd != null">
+				work_pwd = #{record.workPwd,jdbcType=VARCHAR},
+			</if>
+			<if test="record.posPadId != null">
+				pos_pad_id = #{record.posPadId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.orgId != null">
+				org_id = #{record.orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.planner != null">
+				planner = #{record.planner,jdbcType=BIT},
+			</if>
+			<if test="record.avatar != null">
+				avatar = #{record.avatar,jdbcType=VARCHAR},
+			</if>
+			<if test="record.admin != null">
+				admin = #{record.admin,jdbcType=INTEGER},
+			</if>
+			<if test="record.createTime != null">
+				create_time = #{record.createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.employeeNo != null">
+				employee_no = #{record.employeeNo,jdbcType=VARCHAR},
+			</if>
+			<if test="record.entryTime != null">
+				entry_time = #{record.entryTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.birthday != null">
+				birthday = #{record.birthday,jdbcType=DATE},
+			</if>
+			<if test="record.address != null">
+				address = #{record.address,jdbcType=VARCHAR},
+			</if>
+			<if test="record.idcard != null">
+				idcard = #{record.idcard,jdbcType=VARCHAR},
+			</if>
+			<if test="record.deprId != null">
+				idcard = #{record.deptId,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateBulks" parameterType="map">
+		<!-- WARNING - 根据params所携带条件更新指定字段。 MyBatis代码工具自动生成，不要修改！ -->
+		update employee
+		<set>
+			<if test="record.employeeId != null">
+				employee_id = #{record.employeeId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.account != null">
+				account = #{record.account,jdbcType=VARCHAR},
+			</if>
+			<if test="record.name != null">
+				name = #{record.name,jdbcType=VARCHAR},
+			</if>
+			<if test="record.mobile != null">
+				mobile = #{record.mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="record.email != null">
+				email = #{record.email,jdbcType=VARCHAR},
+			</if>
+			<if test="record.gender != null">
+				gender = #{record.gender,jdbcType=INTEGER},
+			</if>
+			<if test="record.department != null">
+				department = #{record.department,jdbcType=VARCHAR},
+			</if>
+			<if test="record.position != null">
+				position = #{record.position,jdbcType=VARCHAR},
+			</if>
+			<if test="record.loginPwd != null">
+				login_pwd = #{record.loginPwd,jdbcType=VARCHAR},
+			</if>
+			<if test="record.workPwd != null">
+				work_pwd = #{record.workPwd,jdbcType=VARCHAR},
+			</if>
+			<if test="record.posPadId != null">
+				pos_pad_id = #{record.posPadId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.orgId != null">
+				org_id = #{record.orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.planner != null">
+				planner = #{record.planner,jdbcType=BIT},
+			</if>
+			<if test="record.avatar != null">
+				avatar = #{record.avatar,jdbcType=VARCHAR},
+			</if>
+			<if test="record.admin != null">
+				admin = #{record.admin,jdbcType=INTEGER},
+			</if>
+			<if test="record.createTime != null">
+				create_time = #{record.createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.employeeNo != null">
+				employee_no = #{record.employeeNo,jdbcType=VARCHAR},
+			</if>
+			<if test="record.entryTime != null">
+				entry_time = #{record.entryTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.birthday != null">
+				birthday = #{record.birthday,jdbcType=DATE},
+			</if>
+			<if test="record.address != null">
+				address = #{record.address,jdbcType=VARCHAR},
+			</if>
+			<if test="record.idcard != null">
+				idcard = #{record.idcard,jdbcType=VARCHAR},
+			</if>
+			<if test="record.deptId != null">
+				dept_id = #{record.deprId,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="update_model_where_clause" />
+		</if>
+	</update>
+	<update id="updateById" parameterType="com.wocai.jrt.employee.model.Employee">
+		<!-- WARNING - 根据主键更新指定字段的数据。 MyBatis代码工具自动生成，不要修改！ -->
+		update employee
+		<set>
+			<if test="account != null">
+				account = #{account,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null">
+				mobile = #{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="gender != null">
+				gender = #{gender,jdbcType=INTEGER},
+			</if>
+			<if test="department != null">
+				department = #{department,jdbcType=VARCHAR},
+			</if>
+			<if test="position != null">
+				position = #{position,jdbcType=VARCHAR},
+			</if>
+			<if test="loginPwd != null">
+				login_pwd = #{loginPwd,jdbcType=VARCHAR},
+			</if>
+			<if test="workPwd != null">
+				work_pwd = #{workPwd,jdbcType=VARCHAR},
+			</if>
+			<if test="posPadId != null">
+				pos_pad_id = #{posPadId,jdbcType=VARCHAR},
+			</if>
+			<if test="orgId != null">
+				org_id = #{orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="planner != null">
+				planner = #{planner,jdbcType=BIT},
+			</if>
+			<if test="avatar != null">
+				avatar = #{avatar,jdbcType=VARCHAR},
+			</if>
+			<if test="admin != null">
+				admin = #{admin,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="employeeNo != null">
+				employee_no = #{employeeNo,jdbcType=VARCHAR},
+			</if>
+			<if test="entryTime != null">
+				entry_time = #{entryTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="birthday != null">
+				birthday = #{birthday,jdbcType=DATE},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="idcard != null">
+				idcard = #{idcard,jdbcType=VARCHAR},
+			</if>
+			<if test="deptId != null">
+				depr_id = #{deptId,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where employee_id = #{employeeId,jdbcType=VARCHAR}
+	</update>
+
+
+	<!--根据员工id获取团队长信息 -->
+	<select id="getLeader" parameterType="java.lang.String"
+		resultMap="employeeResultMap">
+		select e.* from
+		group_member gm,employee_group eg,employee e
+		where
+		e.employee_id = eg.employee_id
+		and eg.deleted = 0
+		and gm.group_id = eg.id
+		and gm.employee_id = #{employeeId}
+	</select>
+
+	<select id="getAgentEmp" parameterType="com.wocai.jrt.employee.model.Employee"
+		resultMap="employeeResultMap">
+		SELECT
+		employee_id,
+		employee_no,
+		account,
+		`name`,
+		mobile,
+		email,
+		gender,
+		department,
+		avatar
+		FROM
+		employee
+		WHERE
+		employee_id != #{employeeId}
+		<if test="name != null">
+		AND `name` LIKE #{name}"%"
+		</if>
+		AND org_id = #{orgId}
+	</select>
+
+</mapper>

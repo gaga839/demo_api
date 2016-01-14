@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wocai.jrt.employee.dao.EmployeeCommissionHistoryDao">
+	<resultMap id="employeeCommissionHistoryResultMap"
+		type="com.wocai.jrt.employee.model.EmployeeCommissionHistory">
+		<!-- WARNING - 结果集映射，不含Blob字段。 MyBatis代码工具自动生成，不要修改！ -->
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="order_id" property="orderId" jdbcType="VARCHAR" />
+		<result column="product_id" property="productId" jdbcType="VARCHAR" />
+		<result column="commission_rate" property="commissionRate"
+			jdbcType="DECIMAL" />
+		<result column="commission" property="commission" jdbcType="DECIMAL" />
+		<result column="employee_id" property="employeeId" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="dividend_rate" property="dividendRate"
+			jdbcType="DECIMAL" />
+		<result column="dividend" property="dividend" jdbcType="DECIMAL" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		<!-- WARNING - 该表所有字段。 MyBatis代码工具自动生成，不要修改！ -->
+		id, order_id, product_id, commission_rate, commission, employee_id,
+		create_time,
+		dividend_rate, dividend
+	</sql>
+	<sql id="Example_Where_Clause">
+		<!-- WARNING - Criteria条件查询的where语句。 MyBatis代码工具自动生成，不要修改！ -->
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+		<if test="orderBy != null">
+			order by ${orderBy}
+		</if>
+		<if test="start != null">
+			limit ${start}, ${pageSize}
+		</if>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<!-- WARNING - Criteria条件查询的where语句。 MyBatis代码工具自动生成，不要修改！ -->
+		<where>
+			<foreach collection="params.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="model_where_clause">
+		<!-- WARNING - 根据model条件，查询或更新的where语句。 MyBatis代码工具自动生成，不要修改！ -->
+		<where>
+			<trim prefixOverrides="and">
+				<if test="orderId != null">
+					and order_id = #{orderId,jdbcType=VARCHAR}
+				</if>
+				<if test="productId != null">
+					and product_id = #{productId,jdbcType=VARCHAR}
+				</if>
+				<if test="commissionRate != null">
+					and commission_rate = #{commissionRate,jdbcType=DECIMAL}
+				</if>
+				<if test="commission != null">
+					and commission = #{commission,jdbcType=DECIMAL}
+				</if>
+				<if test="employeeId != null">
+					and employee_id = #{employeeId,jdbcType=VARCHAR}
+				</if>
+				<if test="createTime != null">
+					and create_time = #{createTime,jdbcType=TIMESTAMP}
+				</if>
+				<if test="dividendRate != null">
+					and dividend_rate = #{dividendRate,jdbcType=DECIMAL}
+				</if>
+				<if test="dividend != null">
+					and dividend = #{dividend,jdbcType=DECIMAL}
+				</if>
+			</trim>
+		</where>
+		<if test="orderBy != null">
+			order by ${orderBy}
+		</if>
+		<if test="start != null">
+			limit ${start}, ${pageSize}
+		</if>
+	</sql>
+	<sql id="update_model_where_clause">
+		<!-- WARNING - 根据model条件，更新的where语句。 MyBatis代码工具自动生成，不要修改！ -->
+		<where>
+			<trim prefixOverrides="and">
+				<if test="params.orderId != null">
+					and order_id = #{params.orderId,jdbcType=VARCHAR}
+				</if>
+				<if test="params.productId != null">
+					and product_id = #{params.productId,jdbcType=VARCHAR}
+				</if>
+				<if test="params.commissionRate != null">
+					and commission_rate =
+					#{params.commissionRate,jdbcType=DECIMAL}
+				</if>
+				<if test="params.commission != null">
+					and commission = #{params.commission,jdbcType=DECIMAL}
+				</if>
+				<if test="params.employeeId != null">
+					and employee_id = #{params.employeeId,jdbcType=VARCHAR}
+				</if>
+				<if test="params.createTime != null">
+					and create_time =
+					#{params.createTime,jdbcType=TIMESTAMP}
+				</if>
+				<if test="params.dividendRate != null">
+					and dividend_rate =
+					#{params.dividendRate,jdbcType=DECIMAL}
+				</if>
+				<if test="params.dividend != null">
+					and dividend = #{params.dividend,jdbcType=DECIMAL}
+				</if>
+			</trim>
+		</where>
+	</sql>
+	<select id="queryForList" resultMap="employeeCommissionHistoryResultMap"
+		parameterType="com.wocai.jrt.employee.model.EmployeeCommissionHistoryBean">
+		<!-- WARNING - 根据Criteria所携带条件查询数据，不含Blob字段。 MyBatis代码工具自动生成，不要修改！ -->
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from employee_commission_history
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<select id="queryList" resultMap="employeeCommissionHistoryResultMap"
+		parameterType="com.wocai.jrt.employee.model.EmployeeCommissionHistory">
+		<!-- WARNING - 根据params所携带条件查询数据。 MyBatis代码工具自动生成，不要修改！ -->
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from employee_commission_history
+		<if test="_parameter != null">
+			<include refid="model_where_clause" />
+		</if>
+	</select>
+	<select id="pagedForList" resultMap="employeeCommissionHistoryResultMap"
+		parameterType="com.wocai.jrt.employee.model.EmployeeCommissionHistoryBean">
+		<!-- WARNING - 根据Criteria所携带条件分页查询数据。 MyBatis代码工具自动生成，不要修改！ -->
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from employee_commission_history
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<select id="pagedList" resultMap="employeeCommissionHistoryResultMap"
+		parameterType="com.wocai.jrt.employee.model.EmployeeCommissionHistory">
+		<!-- WARNING - 根据params所携带条件分页查询数据。 MyBatis代码工具自动生成，不要修改！ -->
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from employee_commission_history
+		<if test="_parameter != null">
+			<include refid="model_where_clause" />
+		</if>
+	</select>
+	<select id="get" resultMap="employeeCommissionHistoryResultMap"
+		parameterType="java.lang.String">
+		<!-- WARNING - 根据主键查询数据。 MyBatis代码工具自动生成，不要修改！ -->
+		select
+		<include refid="Base_Column_List" />
+		from employee_commission_history
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<select id="unique" resultMap="employeeCommissionHistoryResultMap"
+		parameterType="com.wocai.jrt.employee.model.EmployeeCommissionHistory">
+		<!-- WARNING - 根据params所携带条件查询唯一记录。 MyBatis代码工具自动生成，不要修改！ -->
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from employee_commission_history
+		<if test="_parameter != null">
+			<include refid="model_where_clause" />
+		</if>
+	</select>
+	<delete id="deleteById" parameterType="java.lang.String">
+		<!-- WARNING - 根据主键删除记录。 MyBatis代码工具自动生成，不要修改！ -->
+		delete from employee_commission_history
+		where id =
+		#{id,jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteBatch"
+		parameterType="com.wocai.jrt.employee.model.EmployeeCommissionHistoryBean">
+		<!-- WARNING - 根据Criteria所携带条件删除记录。 MyBatis代码工具自动生成，不要修改！ -->
+		delete from employee_commission_history
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<delete id="deleteBulks"
+		parameterType="com.wocai.jrt.employee.model.EmployeeCommissionHistory">
+		<!-- WARNING - 根据params所携带条件删除数据。 MyBatis代码工具自动生成，不要修改！ -->
+		delete from employee_commission_history
+		<if test="_parameter != null">
+			<include refid="model_where_clause" />
+		</if>
+	</delete>
+	<insert id="save"
+		parameterType="com.wocai.jrt.employee.model.EmployeeCommissionHistory">
+		<!-- WARNING - 插入记录，只有非空字段才会插入到数据库。 MyBatis代码工具自动生成，不要修改！ -->
+		insert into employee_commission_history
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="orderId != null">
+				order_id,
+			</if>
+			<if test="productId != null">
+				product_id,
+			</if>
+			<if test="commissionRate != null">
+				commission_rate,
+			</if>
+			<if test="commission != null">
+				commission,
+			</if>
+			<if test="employeeId != null">
+				employee_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="dividendRate != null">
+				dividend_rate,
+			</if>
+			<if test="dividend != null">
+				dividend,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="orderId != null">
+				#{orderId,jdbcType=VARCHAR},
+			</if>
+			<if test="productId != null">
+				#{productId,jdbcType=VARCHAR},
+			</if>
+			<if test="commissionRate != null">
+				#{commissionRate,jdbcType=DECIMAL},
+			</if>
+			<if test="commission != null">
+				#{commission,jdbcType=DECIMAL},
+			</if>
+			<if test="employeeId != null">
+				#{employeeId,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="dividendRate != null">
+				#{dividendRate,jdbcType=DECIMAL},
+			</if>
+			<if test="dividend != null">
+				#{dividend,jdbcType=DECIMAL},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<select id="count"
+		parameterType="com.wocai.jrt.employee.model.EmployeeCommissionHistoryBean"
+		resultType="java.lang.Integer">
+		<!-- WARNING - 根据Criteria所携带条件进行count计数。 MyBatis代码工具自动生成，不要修改！ -->
+		select count(*) from employee_commission_history
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<select id="countBy"
+		parameterType="com.wocai.jrt.employee.model.EmployeeCommissionHistory"
+		resultType="java.lang.Integer">
+		<!-- WARNING - 根据params所携带条件计数。 MyBatis代码工具自动生成，不要修改！ -->
+		select count(*) from employee_commission_history
+		<if test="_parameter != null">
+			<include refid="model_where_clause" />
+		</if>
+	</select>
+	<update id="updateBatch" parameterType="map">
+		<!-- WARNING - 根据Criteria所携带条件更新指定字段。 MyBatis代码工具自动生成，不要修改！ -->
+		update employee_commission_history
+		<set>
+			<if test="record.id != null">
+				id = #{record.id,jdbcType=VARCHAR},
+			</if>
+			<if test="record.orderId != null">
+				order_id = #{record.orderId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.productId != null">
+				product_id = #{record.productId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.commissionRate != null">
+				commission_rate =
+				#{record.commissionRate,jdbcType=DECIMAL},
+			</if>
+			<if test="record.commission != null">
+				commission = #{record.commission,jdbcType=DECIMAL},
+			</if>
+			<if test="record.employeeId != null">
+				employee_id = #{record.employeeId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.createTime != null">
+				create_time = #{record.createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.dividendRate != null">
+				dividend_rate = #{record.dividendRate,jdbcType=DECIMAL},
+			</if>
+			<if test="record.dividend != null">
+				dividend = #{record.dividend,jdbcType=DECIMAL},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateBulks" parameterType="map">
+		<!-- WARNING - 根据params所携带条件更新指定字段。 MyBatis代码工具自动生成，不要修改！ -->
+		update employee_commission_history
+		<set>
+			<if test="record.id != null">
+				id = #{record.id,jdbcType=VARCHAR},
+			</if>
+			<if test="record.orderId != null">
+				order_id = #{record.orderId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.productId != null">
+				product_id = #{record.productId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.commissionRate != null">
+				commission_rate =
+				#{record.commissionRate,jdbcType=DECIMAL},
+			</if>
+			<if test="record.commission != null">
+				commission = #{record.commission,jdbcType=DECIMAL},
+			</if>
+			<if test="record.employeeId != null">
+				employee_id = #{record.employeeId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.createTime != null">
+				create_time = #{record.createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.dividendRate != null">
+				dividend_rate = #{record.dividendRate,jdbcType=DECIMAL},
+			</if>
+			<if test="record.dividend != null">
+				dividend = #{record.dividend,jdbcType=DECIMAL},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="update_model_where_clause" />
+		</if>
+	</update>
+	<update id="updateById"
+		parameterType="com.wocai.jrt.employee.model.EmployeeCommissionHistory">
+		<!-- WARNING - 根据主键更新指定字段的数据。 MyBatis代码工具自动生成，不要修改！ -->
+		update employee_commission_history
+		<set>
+			<if test="orderId != null">
+				order_id = #{orderId,jdbcType=VARCHAR},
+			</if>
+			<if test="productId != null">
+				product_id = #{productId,jdbcType=VARCHAR},
+			</if>
+			<if test="commissionRate != null">
+				commission_rate = #{commissionRate,jdbcType=DECIMAL},
+			</if>
+			<if test="commission != null">
+				commission = #{commission,jdbcType=DECIMAL},
+			</if>
+			<if test="employeeId != null">
+				employee_id = #{employeeId,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="dividendRate != null">
+				dividend_rate = #{dividendRate,jdbcType=DECIMAL},
+			</if>
+			<if test="dividend != null">
+				dividend = #{dividend,jdbcType=DECIMAL},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<select id="getMyCommission" resultType="java.lang.Double">
+		SELECT
+		Sum(employee_commission_history.commission)
+		FROM
+		employee_commission_history
+		WHERE
+		employee_commission_history.employee_id =
+		#{employeeId,jdbcType=VARCHAR} AND
+		employee_commission_history.create_time BETWEEN
+		#{beginDate} and
+		#{endDate}
+		GROUP BY
+		employee_commission_history.employee_id
+	</select>
+	<select id="getMyDividend" resultType="java.lang.Double">
+		SELECT
+		Sum(employee_commission_history.dividend)
+		FROM
+		employee_commission_history
+		WHERE
+		employee_commission_history.employee_id =
+		#{employeeId,jdbcType=VARCHAR} AND
+		employee_commission_history.create_time BETWEEN
+		#{beginDate} and
+		#{endDate}
+		GROUP BY
+		employee_commission_history.employee_id
+	</select>
+	<select id="getGroupCommission" resultType="java.lang.Double">
+		SELECT
+		SUM(IFNULL(employee_commission_history.commission,0) +
+		IFNULL(employee_commission_history.dividend,0))
+		FROM
+		employee_commission_history
+		WHERE
+		employee_commission_history.employee_id IN (
+			SELECT
+			employee.employee_id
+			FROM
+			employee
+			WHERE
+			employee.dept_id = #{groupId,jdbcType=VARCHAR}
+		) AND
+		employee_commission_history.create_time BETWEEN
+		#{beginDate} and
+		#{endDate}
+	</select>
+</mapper>

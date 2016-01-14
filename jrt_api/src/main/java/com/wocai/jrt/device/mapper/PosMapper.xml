@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wocai.jrt.device.dao.PosDao" >
+  <resultMap id="posResultMap" type="com.wocai.jrt.device.model.Pos" >
+    <!--
+      WARNING - 结果集映射，不含Blob字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="serial_number" property="serialNumber" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="related" property="related" jdbcType="INTEGER" />
+    <result column="hard_code" property="hardCode" jdbcType="VARCHAR" />
+    <result column="org_id" property="orgId" jdbcType="VARCHAR" />
+    <result column="storage_time" property="storageTime" jdbcType="TIMESTAMP" />
+    <result column="collar_time" property="collarTime" jdbcType="TIMESTAMP" />
+    <result column="batch_number" property="batchNumber" jdbcType="VARCHAR" />
+    <result column="deleted" property="deleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - 该表所有字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    id, serial_number, state, related, hard_code, org_id, storage_time, collar_time, 
+    batch_number, deleted
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <!--
+      WARNING - Criteria条件查询的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <foreach collection="oredCriteria" item="criteria" >
+        <if test="criteria.valid" >
+          <if test="criteria.andRelation" >
+            and
+          </if>
+          <if test="!criteria.andRelation" >
+            or
+          </if>
+          <trim prefix="(" suffix=")" prefixOverrides="and|or" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue and !criterion.orValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.noValue and criterion.orValue" >
+                  or ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue and !criterion.orValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.singleValue and criterion.orValue" >
+                  or ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue and !criterion.orValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.betweenValue and criterion.orValue" >
+                  or ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue and !criterion.orValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.listValue and criterion.orValue" >
+                  or ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+    <if test="orderBy != null" >
+      order by ${orderBy}
+    </if>
+    <if test="start != null" >
+      limit ${start}, ${pageSize}
+    </if>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <!--
+      WARNING - Criteria条件查询的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <foreach collection="params.oredCriteria" item="criteria" >
+        <if test="criteria.valid" >
+          <if test="criteria.andRelation" >
+            and
+          </if>
+          <if test="!criteria.andRelation" >
+            or
+          </if>
+          <trim prefix="(" suffix=")" prefixOverrides="and|or" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue and !criterion.orValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.noValue and criterion.orValue" >
+                  or ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue and !criterion.orValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.singleValue and criterion.orValue" >
+                  or ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue and !criterion.orValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.betweenValue and criterion.orValue" >
+                  or ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue and !criterion.orValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.listValue and criterion.orValue" >
+                  or ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="model_where_clause" >
+    <!--
+      WARNING - 根据model条件，查询或更新的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <trim prefixOverrides="and" >
+        <if test="serialNumber != null" >
+          and serial_number = #{serialNumber,jdbcType=VARCHAR}
+        </if>
+        <if test="state != null" >
+          and state = #{state,jdbcType=INTEGER}
+        </if>
+        <if test="related != null" >
+          and related = #{related,jdbcType=INTEGER}
+        </if>
+        <if test="hardCode != null" >
+          and hard_code = #{hardCode,jdbcType=VARCHAR}
+        </if>
+        <if test="orgId != null" >
+          and org_id = #{orgId,jdbcType=VARCHAR}
+        </if>
+        <if test="storageTime != null" >
+          and storage_time = #{storageTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="collarTime != null" >
+          and collar_time = #{collarTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="batchNumber != null" >
+          and batch_number = #{batchNumber,jdbcType=VARCHAR}
+        </if>
+        <if test="deleted != null" >
+          and deleted = #{deleted,jdbcType=BIT}
+        </if>
+      </trim>
+    </where>
+    <if test="orderBy != null" >
+      order by ${orderBy}
+    </if>
+    <if test="start != null" >
+      limit ${start}, ${pageSize}
+    </if>
+  </sql>
+  <sql id="update_model_where_clause" >
+    <!--
+      WARNING - 根据model条件，更新的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <trim prefixOverrides="and" >
+        <if test="params.serialNumber != null" >
+          and serial_number = #{params.serialNumber,jdbcType=VARCHAR}
+        </if>
+        <if test="params.state != null" >
+          and state = #{params.state,jdbcType=INTEGER}
+        </if>
+        <if test="params.related != null" >
+          and related = #{params.related,jdbcType=INTEGER}
+        </if>
+        <if test="params.hardCode != null" >
+          and hard_code = #{params.hardCode,jdbcType=VARCHAR}
+        </if>
+        <if test="params.orgId != null" >
+          and org_id = #{params.orgId,jdbcType=VARCHAR}
+        </if>
+        <if test="params.storageTime != null" >
+          and storage_time = #{params.storageTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="params.collarTime != null" >
+          and collar_time = #{params.collarTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="params.batchNumber != null" >
+          and batch_number = #{params.batchNumber,jdbcType=VARCHAR}
+        </if>
+        <if test="params.deleted != null" >
+          and deleted = #{params.deleted,jdbcType=BIT}
+        </if>
+      </trim>
+    </where>
+  </sql>
+  <select id="queryForList" resultMap="posResultMap" parameterType="com.wocai.jrt.device.model.PosBean" >
+    <!--
+      WARNING - 根据Criteria所携带条件查询数据，不含Blob字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pos
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="queryList" resultMap="posResultMap" parameterType="com.wocai.jrt.device.model.Pos" >
+    <!--
+      WARNING - 根据params所携带条件查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pos
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <select id="pagedForList" resultMap="posResultMap" parameterType="com.wocai.jrt.device.model.PosBean" >
+    <!--
+      WARNING - 根据Criteria所携带条件分页查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pos
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="pagedList" resultMap="posResultMap" parameterType="com.wocai.jrt.device.model.Pos" >
+    <!--
+      WARNING - 根据params所携带条件分页查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pos
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <select id="get" resultMap="posResultMap" parameterType="java.lang.String" >
+    <!--
+      WARNING - 根据主键查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from pos
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="unique" resultMap="posResultMap" parameterType="com.wocai.jrt.device.model.Pos" >
+    <!--
+      WARNING - 根据params所携带条件查询唯一记录。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pos
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <delete id="deleteById" parameterType="java.lang.String" >
+    <!--
+      WARNING - 根据主键删除记录。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    delete from pos
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBatch" parameterType="com.wocai.jrt.device.model.PosBean" >
+    <!--
+      WARNING - 根据Criteria所携带条件删除记录。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    delete from pos
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <delete id="deleteBulks" parameterType="com.wocai.jrt.device.model.Pos" >
+    <!--
+      WARNING - 根据params所携带条件删除数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    delete from pos
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </delete>
+  <insert id="save" parameterType="com.wocai.jrt.device.model.Pos" >
+    <!--
+      WARNING - 插入记录，只有非空字段才会插入到数据库。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    insert into pos
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="serialNumber != null" >
+        serial_number,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="related != null" >
+        related,
+      </if>
+      <if test="hardCode != null" >
+        hard_code,
+      </if>
+      <if test="orgId != null" >
+        org_id,
+      </if>
+      <if test="storageTime != null" >
+        storage_time,
+      </if>
+      <if test="collarTime != null" >
+        collar_time,
+      </if>
+      <if test="batchNumber != null" >
+        batch_number,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="serialNumber != null" >
+        #{serialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="related != null" >
+        #{related,jdbcType=INTEGER},
+      </if>
+      <if test="hardCode != null" >
+        #{hardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="storageTime != null" >
+        #{storageTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="collarTime != null" >
+        #{collarTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="batchNumber != null" >
+        #{batchNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="count" parameterType="com.wocai.jrt.device.model.PosBean" resultType="java.lang.Integer" >
+    <!--
+      WARNING - 根据Criteria所携带条件进行count计数。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select count(*) from pos
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="countBy" parameterType="com.wocai.jrt.device.model.Pos" resultType="java.lang.Integer" >
+    <!--
+      WARNING - 根据params所携带条件计数。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select count(*) from pos
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <update id="updateBatch" parameterType="map" >
+    <!--
+      WARNING - 根据Criteria所携带条件更新指定字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    update pos
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serialNumber != null" >
+        serial_number = #{record.serialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
+      <if test="record.related != null" >
+        related = #{record.related,jdbcType=INTEGER},
+      </if>
+      <if test="record.hardCode != null" >
+        hard_code = #{record.hardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgId != null" >
+        org_id = #{record.orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storageTime != null" >
+        storage_time = #{record.storageTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.collarTime != null" >
+        collar_time = #{record.collarTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.batchNumber != null" >
+        batch_number = #{record.batchNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleted != null" >
+        deleted = #{record.deleted,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateBulks" parameterType="map" >
+    <!--
+      WARNING - 根据params所携带条件更新指定字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    update pos
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serialNumber != null" >
+        serial_number = #{record.serialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
+      <if test="record.related != null" >
+        related = #{record.related,jdbcType=INTEGER},
+      </if>
+      <if test="record.hardCode != null" >
+        hard_code = #{record.hardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgId != null" >
+        org_id = #{record.orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storageTime != null" >
+        storage_time = #{record.storageTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.collarTime != null" >
+        collar_time = #{record.collarTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.batchNumber != null" >
+        batch_number = #{record.batchNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleted != null" >
+        deleted = #{record.deleted,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="update_model_where_clause" />
+    </if>
+  </update>
+  <update id="updateById" parameterType="com.wocai.jrt.device.model.Pos" >
+    <!--
+      WARNING - 根据主键更新指定字段的数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    update pos
+    <set >
+      <if test="serialNumber != null" >
+        serial_number = #{serialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="related != null" >
+        related = #{related,jdbcType=INTEGER},
+      </if>
+      <if test="hardCode != null" >
+        hard_code = #{hardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        org_id = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="storageTime != null" >
+        storage_time = #{storageTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="collarTime != null" >
+        collar_time = #{collarTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="batchNumber != null" >
+        batch_number = #{batchNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

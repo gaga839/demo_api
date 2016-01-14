@@ -1,0 +1,633 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wocai.jrt.message.dao.MessageDao" >
+  <resultMap id="messageResultMap" type="com.wocai.jrt.message.model.Message" >
+    <!--
+      WARNING - 结果集映射，不含Blob字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="message" property="message" jdbcType="VARCHAR" />
+    <result column="sender" property="sender" jdbcType="VARCHAR" />
+    <result column="receiver" property="receiver" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="org_id" property="orgId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - 该表所有字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    id, message, sender, receiver, state, type, create_time, org_id
+  </sql>
+  <sql id="Example_Where_Clause" >
+    <!--
+      WARNING - Criteria条件查询的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+    <if test="orderBy != null" >
+      order by ${orderBy}
+    </if>
+    <if test="start != null" >
+      limit ${start}, ${pageSize}
+    </if>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <!--
+      WARNING - Criteria条件查询的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <foreach collection="params.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="model_where_clause" >
+    <!--
+      WARNING - 根据model条件，查询或更新的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <trim prefixOverrides="and" >
+        <if test="message != null" >
+          and message = #{message,jdbcType=VARCHAR}
+        </if>
+        <if test="sender != null" >
+          and sender = #{sender,jdbcType=VARCHAR}
+        </if>
+        <if test="receiver != null" >
+          and receiver = #{receiver,jdbcType=VARCHAR}
+        </if>
+        <if test="state != null" >
+          and state = #{state,jdbcType=INTEGER}
+        </if>
+        <if test="type != null" >
+          and type = #{type,jdbcType=INTEGER}
+        </if>
+        <if test="createTime != null" >
+          and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="orgId != null" >
+          and org_id = #{orgId,jdbcType=VARCHAR}
+        </if>
+      </trim>
+    </where>
+    <if test="orderBy != null" >
+      order by ${orderBy}
+    </if>
+    <if test="start != null" >
+      limit ${start}, ${pageSize}
+    </if>
+  </sql>
+  <sql id="update_model_where_clause" >
+    <!--
+      WARNING - 根据model条件，更新的where语句。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    <where >
+      <trim prefixOverrides="and" >
+        <if test="params.message != null" >
+          and message = #{params.message,jdbcType=VARCHAR}
+        </if>
+        <if test="params.sender != null" >
+          and sender = #{params.sender,jdbcType=VARCHAR}
+        </if>
+        <if test="params.receiver != null" >
+          and receiver = #{params.receiver,jdbcType=VARCHAR}
+        </if>
+        <if test="params.state != null" >
+          and state = #{params.state,jdbcType=INTEGER}
+        </if>
+        <if test="params.type != null" >
+          and type = #{params.type,jdbcType=INTEGER}
+        </if>
+        <if test="params.createTime != null" >
+          and create_time = #{params.createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="params.orgId != null" >
+          and org_id = #{params.orgId,jdbcType=VARCHAR}
+        </if>
+      </trim>
+    </where>
+  </sql>
+  <select id="queryForList" resultMap="messageResultMap" parameterType="com.wocai.jrt.message.model.MessageBean" >
+    <!--
+      WARNING - 根据Criteria所携带条件查询数据，不含Blob字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="queryList" resultMap="messageResultMap" parameterType="com.wocai.jrt.message.model.Message" >
+    <!--
+      WARNING - 根据params所携带条件查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from message
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <select id="pagedForList" resultMap="messageResultMap" parameterType="com.wocai.jrt.message.model.MessageBean" >
+    <!--
+      WARNING - 根据Criteria所携带条件分页查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="pagedList" resultMap="messageResultMap" parameterType="com.wocai.jrt.message.model.Message" >
+    <!--
+      WARNING - 根据params所携带条件分页查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from message
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <select id="get" resultMap="messageResultMap" parameterType="java.lang.String" >
+    <!--
+      WARNING - 根据主键查询数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from message
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="unique" resultMap="messageResultMap" parameterType="com.wocai.jrt.message.model.Message" >
+    <!--
+      WARNING - 根据params所携带条件查询唯一记录。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from message
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <delete id="deleteById" parameterType="java.lang.String" >
+    <!--
+      WARNING - 根据主键删除记录。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    delete from message
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteBatch" parameterType="com.wocai.jrt.message.model.MessageBean" >
+    <!--
+      WARNING - 根据Criteria所携带条件删除记录。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    delete from message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <delete id="deleteBulks" parameterType="com.wocai.jrt.message.model.Message" >
+    <!--
+      WARNING - 根据params所携带条件删除数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    delete from message
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </delete>
+  <insert id="save" parameterType="com.wocai.jrt.message.model.Message" >
+    <!--
+      WARNING - 插入记录，只有非空字段才会插入到数据库。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    insert into message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="message != null" >
+        message,
+      </if>
+      <if test="sender != null" >
+        sender,
+      </if>
+      <if test="receiver != null" >
+        receiver,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="orgId != null" >
+        org_id,
+      </if>
+      <if test="skipType != null" >
+        skip_type,
+      </if>
+      <if test="skipKey != null" >
+        skip_key,
+      </if>
+      <if test="businessType != null" >
+        business_type,
+      </if>
+      <if test="messageType != null" >
+        message_type,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null" >
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="sender != null" >
+        #{sender,jdbcType=VARCHAR},
+      </if>
+      <if test="receiver != null" >
+        #{receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="skipType != null" >
+        #{skipType,jdbcType=INTEGER},
+      </if>
+      <if test="skipKey != null" >
+        #{skipKey,jdbcType=VARCHAR},
+      </if>
+      <if test="businessType != null" >
+        #{businessType,jdbcType=INTEGER},
+      </if>
+      <if test="messageType != null" >
+        #{messageType,jdbcType=INTEGER},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="count" parameterType="com.wocai.jrt.message.model.MessageBean" resultType="java.lang.Integer" >
+    <!--
+      WARNING - 根据Criteria所携带条件进行count计数。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select count(*) from message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="countBy" parameterType="com.wocai.jrt.message.model.Message" resultType="java.lang.Integer" >
+    <!--
+      WARNING - 根据params所携带条件计数。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    select count(*) from message
+    <if test="_parameter != null" >
+      <include refid="model_where_clause" />
+    </if>
+  </select>
+  <update id="updateBatch" parameterType="map" >
+    <!--
+      WARNING - 根据Criteria所携带条件更新指定字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    update message
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.message != null" >
+        message = #{record.message,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sender != null" >
+        sender = #{record.sender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiver != null" >
+        receiver = #{record.receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orgId != null" >
+        org_id = #{record.orgId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateBulks" parameterType="map" >
+    <!--
+      WARNING - 根据params所携带条件更新指定字段。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    update message
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.message != null" >
+        message = #{record.message,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sender != null" >
+        sender = #{record.sender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiver != null" >
+        receiver = #{record.receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orgId != null" >
+        org_id = #{record.orgId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="update_model_where_clause" />
+    </if>
+  </update>
+  <update id="updateById" parameterType="com.wocai.jrt.message.model.Message" >
+    <!--
+      WARNING - 根据主键更新指定字段的数据。
+      MyBatis代码工具自动生成，不要修改！
+    -->
+    update message
+    <set >
+      <if test="message != null" >
+        message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="sender != null" >
+        sender = #{sender,jdbcType=VARCHAR},
+      </if>
+      <if test="receiver != null" >
+        receiver = #{receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgId != null" >
+        org_id = #{orgId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <!-- 插入消息记录    -->
+  <insert id="doAdd" parameterType="com.wocai.jrt.message.model.Message" >
+  	 insert into message_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="message != null" >
+        message,
+      </if>
+      <if test="sender != null" >
+        sender,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="orgId != null" >
+        org_id,
+      </if>
+      <if test="employeeId != null" >
+        employee_id,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="sendTime != null" >
+        send_time,
+      </if>
+      <if test="skipType != null" >
+        skip_type,
+      </if>
+       <if test="skipKey != null" >
+        skip_key,
+      </if>
+       <if test="businessType != null" >
+        business_type,
+      </if>
+      <if test="messageType != null" >
+        message_type,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null" >
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="sender != null" >
+        #{sender,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null" >
+        #{employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="sendTime != null" >
+        #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="skipType != null" >
+        #{skipType,jdbcType=VARCHAR},
+      </if>
+       <if test="skipKey != null" >
+        #{skipKey,jdbcType=VARCHAR},
+      </if>
+       <if test="businessType != null" >
+        #{businessType,jdbcType=VARCHAR},
+      </if>
+      <if test="messageType != null" >
+        #{messageType,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+   <resultMap id="messageLogResultMap" type="com.wocai.jrt.message.model.Message" >
+	    <id column="id" property="id" jdbcType="VARCHAR" />
+	    <result column="message" property="message" jdbcType="VARCHAR" />
+	    <result column="sender" property="sender" jdbcType="VARCHAR" />
+	    <result column="state" property="state" jdbcType="INTEGER" />
+	    <result column="type" property="type" jdbcType="INTEGER" />
+	    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	    <result column="org_id" property="orgId" jdbcType="VARCHAR" />
+	    <result column="employee_id" property="employeeId" jdbcType="VARCHAR" />
+	    <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
+	    <result column="source" property="source" jdbcType="VARCHAR" />
+	    <result column="skip_type" property="skipType" jdbcType="INTEGER" />
+	    <result column="skip_key" property="skipKey" jdbcType="VARCHAR" />
+	    <result column="business_type" property="businessType" jdbcType="INTEGER" />
+	    <result column="message_type" property="messageType" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <!-- 查询消息日志列表 -->
+  <select id="queryLogList" resultMap="messageLogResultMap" parameterType="com.wocai.jrt.message.bean.MessageReqBean" >
+	    select *
+	    from message_log
+	    where
+	    employee_id = #{employeeId ,jdbcType=VARCHAR}
+	    <if test="messageType != null" >
+	        and message_type  = #{messageType ,jdbcType=VARCHAR}
+	    </if>
+	    <if test="customerId != null" >
+	        and customer_id  = #{customerId ,jdbcType=VARCHAR}
+	    </if>
+	    <if test="state != null" >
+	        and state  = #{state ,jdbcType=INTEGER}
+	    </if>
+	    <if test="orderBy != null" >
+	      order by ${orderBy}
+	    </if>
+	    <if test="page != null">
+	    	 limit #{page},#{pageSize}
+	    </if>
+  </select>
+  
+  <update id="markRead" parameterType="com.wocai.jrt.message.model.Message">
+  	 update message_log set state = 1  where id = #{id ,jdbcType=INTEGER}
+  </update>
+</mapper>
