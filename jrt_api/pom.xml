@@ -122,12 +122,6 @@
 			<version>5.1.35</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.eclipse.birt.runtime.3_7_1</groupId>
-			<artifactId>com.lowagie.text</artifactId>
-			<version>2.1.7</version>
-		</dependency>
-
 		<!-- validation -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -386,6 +380,23 @@
 			<groupId>cn.jpush.api</groupId>
 			<artifactId>jpush-client</artifactId>
 			<version>3.2.1</version>
+		</dependency>
+		<!-- itext -->
+		<dependency>
+			<groupId>com.lowagie</groupId>
+			<artifactId>itext</artifactId>
+			<version>2.0.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xhtmlrenderer</groupId>
+			<artifactId>core-renderer</artifactId>
+			<version>R8</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.perf4j</groupId>
+			<artifactId>perf4j</artifactId>
+			<version>0.9.16</version>
 		</dependency>
 	</dependencies>
 	<build>

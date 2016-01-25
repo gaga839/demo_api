@@ -1,6 +1,8 @@
 package com.wocai.jrt.paper.action;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,6 +13,7 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -18,8 +21,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.xhtmlrenderer.pdf.ITextFontResolver;
+import org.xhtmlrenderer.pdf.ITextRenderer;
 
+import com.lowagie.text.pdf.BaseFont;
 import com.vteba.utils.common.PropUtils;
+import com.vteba.utils.common.PropsUtils;
 import com.vteba.utils.id.ObjectId;
 import com.vteba.web.action.GenericAction;
 import com.vteba.web.action.JsonBean;
@@ -30,6 +37,7 @@ import com.wocai.jrt.paper.bean.AnswerReqBean;
 import com.wocai.jrt.paper.bean.AnswerResBean;
 import com.wocai.jrt.paper.bean.PaperDetailBean;
 import com.wocai.jrt.paper.bean.QuesDetailBean;
+import com.wocai.jrt.paper.bean.QuestionDetailBean;
 import com.wocai.jrt.paper.bean.TestSignReqBean;
 import com.wocai.jrt.paper.model.Answer;
 import com.wocai.jrt.paper.model.Options;
@@ -62,6 +70,8 @@ public class PaperAction extends GenericAction<Paper> {
 	private InvestorServiceImpl investorServiceImpl;
 	@Inject
 	private AnswerServiceImpl answerServiceImpl;
+	
+	public static final String FILE_PATH = PropsUtils.get("file.path")+"evaluafile/";
 	
 	private static final Pattern IMAGE = Pattern.compile("^(.*)+.(jpg|jpeg|gif|png|bmp)$");
 	
@@ -309,6 +319,8 @@ public class PaperAction extends GenericAction<Paper> {
 					investor.setRiskPass(false);
 					investor.setEvaluaState(2);
 				}
+				//更新投资人测评信息
+				investor.setEvaluaFile(FILE_PATH+investor.getId()+"/"+investor.getId()+".pdf");
 				investorServiceImpl.updateById(investor);
 				// 删除旧测评签名文件
 				if (null != oldPath && !StringUtils.isBlank(oldPath)) {
@@ -319,6 +331,9 @@ public class PaperAction extends GenericAction<Paper> {
 						files.delete();
 					}
 				}
+				//生成测评结果pdf
+				createEvaluationPDF(investor.getId());
+				
 				bean.setCode(1);
 				bean.setMessage("上传测评签名文件成功.");
 			}else{
@@ -332,5 +347,131 @@ public class PaperAction extends GenericAction<Paper> {
 		}
 		return bean;
 	}
-
+	
+	
+	/**
+	 * 生成投资人测评结果pdf
+	 * @param id
+	 */
+	public void createEvaluationPDF(String id){
+		String outputFile = "";
+		PropsUtils.get("file.path");
+		try {
+			//获取试卷、投资人信息、测评结果信息
+			Map<String, Object> map = questionServiceImpl.getEvulaDetail(id);
+			Investor investor = (Investor) map.get("investor");
+			String imagesPrefix = PropsUtils.get("images.prefix");
+			String idCard = "-";
+			if(!StringUtils.isBlank(investor.getIdcard())){
+				idCard = investor.getIdcard();
+			}
+			@SuppressWarnings("unchecked")
+			List<QuestionDetailBean> quesDetailList = (List<QuestionDetailBean>) map.get("quesDetailList");
+			// 拼接测评试卷结果html
+			String html = "<div id=\"paper_content\" class=\"tab-content\">"
+					+ "<div class=\"tab-pane active\">"
+					+ "<div class=\"panel-body\">"
+					+ "<div class=\"wrapper wrapper-content animated fadeInRight ecommerce\">"
+					+ "<div class=\"row\">"
+					+ "<div class=\"col-lg-12\">"
+					+ "<center>"
+					+ "<label class=\"control-label\"  style=\"font-size:18pt;\">试卷名称: "
+					+ "投资者尽职调查问卷"
+					+ "</label><br/><br/>"
+					+ "<label class=\"control-label\"  style=\"margin-left:0px;\">测评人:"
+					+ investor.getName()
+					+ "</label>"
+					+ "<label class=\"control-label\" style=\"margin-left:20px;\">&nbsp;&nbsp;&nbsp;证件号码:"
+					+ idCard
+					+ "</label>"
+					+ "<br/><label class=\"control-label\" style=\"margin-left:20px;\">&nbsp;&nbsp;&nbsp;测评时间: "
+					+ DateFormatUtils.format(investor.getEvaluationTime(), "yyyy-MM-dd")
+					+ "</label>"
+					+ "<label class=\"control-label\" style=\"margin-left:20px;\">&nbsp;&nbsp;&nbsp;得分: "
+					+ investor.getScore()
+					+ "分</label>"
+					+ "&nbsp;&nbsp;&nbsp;";
+			if (investor.getRiskPass()) {
+				html = html
+						+ "<label style=\"font-size:20pt;color:red;margin-left:40px;\">通过</label>";
+			} else {
+				html = html
+						+ "<label style=\"font-size:20pt;color:red;margin-left:40px;\">未通过</label>";
+			}
+			html = html
+					+ "</center><br/><div class=\"ibox float-e-margins\"><div class=\"ibox-content\">";
+			for (QuestionDetailBean quesList : quesDetailList) {
+				html = html + "<tr><td align = \"center\" ><label style=\"font-size:13pt;\">"
+						+ quesList.getQuestion().getNo() + "、</label></td>"
+						+ "<td align = \"center\" ><label style=\"font-size:13pt;\">"
+						+ quesList.getQuestion().getTitle() + "</label></td></tr><br/>";
+				for (Options quesOpts : quesList.getOptList()) {
+					html = html
+							+ "&nbsp;&nbsp;&nbsp;<tr><td align = \"center\">"
+							+ quesOpts.getNo()
+							+ ".</td><td align = \"center\">"
+							+ quesOpts.getContent()
+							+ "</td>"
+							+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<td align = \"center\" style=\"margin-left:50px;\">"
+							+ quesOpts.getScore() + "分</td></tr>";
+				}
+				html = html + "&nbsp;&nbsp;&nbsp;&nbsp;<td align = \"center\">";
+				html = html + "<br/>测评人答案:";
+				if (quesList.getQuestion().getAnswer() == null
+						|| quesList.getQuestion().getAnswer().equals("")) {
+					html = html + "无";
+				} else {
+					html = html + quesList.getQuestion().getAnswer();
+				}
+				html = html + "</td><br/><br/>";
+			}
+			html = html + "<label class=\"control-label\"  style=\"font-size:14pt;\">投资人签名确认:</label><br/>";
+			html = html + "<img alt=\"理财师签字\" style=\"width:200px;height:150px;\" src=\""+imagesPrefix+investor.getSignImage()+"\"></img>";
+			html = html + "</div></div></div></div></div></div></div></div>";
+			
+			//如果文件夹不存在,则生成文件夹
+			File _file = new File(FILE_PATH);
+			if (!_file.exists()) {
+				_file.mkdir();
+			}
+			
+			File _fileParent = new File(FILE_PATH+id);
+			if (!_fileParent.exists()) {
+				_fileParent.mkdir();
+			}
+			
+			outputFile =FILE_PATH+id+"/"+id+".pdf";
+			File f = new File(outputFile);
+			
+			// 如果文件不存在则创建文件
+			if (!f.exists()) {
+				f.createNewFile();
+			}
+			OutputStream os = new FileOutputStream(outputFile);
+			ITextRenderer renderer = new ITextRenderer();
+			// 解决中文支持问题
+			ITextFontResolver fontResolver = renderer.getFontResolver();
+			fontResolver.addFont("C:/Windows/fonts/simsun.ttc", BaseFont.IDENTITY_H,
+					BaseFont.NOT_EMBEDDED);
+			StringBuffer htmlStr = new StringBuffer();
+			// 添加html头文件以免中文加载出错
+			htmlStr.append("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">");
+			htmlStr.append("<html xmlns=\"http://www.w3.org/1999/xhtml\">")
+					.append("<head>")
+					.append("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />")
+					.append("<style type=\"text/css\" mce_bogus=\"1\">body {font-family: SimSun;}</style>")
+					.append("</head>").append("<body>");
+			htmlStr.append(html);
+			htmlStr.append("</body></html>");
+			renderer.setDocumentFromString(htmlStr.toString());
+			// 解决图片的相对路径问题
+			renderer.getSharedContext().setBaseURL("file:/c:/");
+			renderer.layout();
+			//讲pdf文件写入流中
+			renderer.createPDF(os);
+    		os.close();
+		} catch (Exception e) {
+			LOGGER.error("createEvaluationPDF error due to [{}]",e.getMessage());
+		} 
+	}
 }

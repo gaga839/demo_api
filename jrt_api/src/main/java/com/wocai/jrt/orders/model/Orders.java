@@ -183,7 +183,11 @@ public class Orders {
 	private Integer offlineAudit;
 	// 订单支付凭证
 	private List<String> voucherList;
-	
+	// 风险揭示书
+	private String riskDisclosure;
+	// 银行卡图片
+	private String bankCard;
+
 	/**
 	 * 产品档次id
 	 */
@@ -193,16 +197,16 @@ public class Orders {
 	private Double subScopeEnd;
 	private String prospectiveEarnings;
 	private String remark;
-	
+
 	/**
 	 * 代理人ID
 	 */
 	private String agentId;
-	
+
 	private String agentName;
-	
+
 	private Boolean deleted;
-	
+
 	public String getAgentName() {
 		return agentName;
 	}
@@ -939,4 +943,21 @@ public class Orders {
 	public void setOfflineAudit(Integer offlineAudit) {
 		this.offlineAudit = offlineAudit;
 	}
+
+	public String getRiskDisclosure() {
+		return riskDisclosure;
+	}
+
+	public void setRiskDisclosure(String riskDisclosure) {
+		this.riskDisclosure = riskDisclosure;
+	}
+
+	public String getBankCard() {
+		return bankCard;
+	}
+
+	public void setBankCard(String bankCard) {
+		this.bankCard = bankCard;
+	}
+
 }

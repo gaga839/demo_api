@@ -749,6 +749,7 @@
 		employee
 		WHERE
 		employee_id != #{employeeId}
+		AND state = 1
 		<if test="name != null">
 		AND `name` LIKE #{name}"%"
 		</if>

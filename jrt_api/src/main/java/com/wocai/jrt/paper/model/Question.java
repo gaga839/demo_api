@@ -76,7 +76,17 @@ public class Question {
      * 对应数据库表字段 question.tag
      */
     private Boolean tag;
+    //测评人本题答案
+    private String answer;
+    
+    
+    public String getAnswer() {
+		return answer;
+	}
 
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
     /**
      * 设置 order by 排序语句
      */

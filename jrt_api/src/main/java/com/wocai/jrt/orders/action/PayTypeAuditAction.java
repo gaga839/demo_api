@@ -27,6 +27,8 @@ import com.vteba.utils.common.PropsUtils;
 import com.vteba.utils.id.ObjectId;
 import com.vteba.web.action.GenericAction;
 import com.vteba.web.action.JsonBean;
+import com.wocai.jrt.employee.model.Org;
+import com.wocai.jrt.employee.service.spi.OrgService;
 import com.wocai.jrt.investor.model.Investor;
 import com.wocai.jrt.investor.service.spi.InvestorService;
 import com.wocai.jrt.orders.model.Orders;
@@ -65,6 +67,8 @@ public class PayTypeAuditAction extends GenericAction<PayTypeAudit> {
 	private ProductService productServiceImpl;
 	@Inject
 	private InvestorService investorServiceImpl;
+	@Inject
+	private OrgService orgServiceImpl;
 
 	/**
 	 * 执行实际的新增操作
@@ -238,6 +242,11 @@ public class PayTypeAuditAction extends GenericAction<PayTypeAudit> {
 					data.setPaySignUser(contactFileWithSign);
 					LOGGER.info("createContact success, contactFileWithSign=[{}]",
 							contactFileWithSign);
+
+					// 生成风险揭示书
+					String userRiskDisclosure = createRiskDisclosure(orderId);
+					LOGGER.info("create userRiskDisclosure success, userRiskDisclosure=[{}]",
+							userRiskDisclosure);
 
 					// Pad端投资人签订合同成功,提醒投后APP用户
 					ordersServiceImpl.createContractMessage(orderId);
@@ -415,6 +424,82 @@ public class PayTypeAuditAction extends GenericAction<PayTypeAudit> {
 		}
 
 		return code;
+	}
+
+	private String createRiskDisclosure(String orderId) throws Exception {
+		// 获取订单详情
+		Orders orderParam = new Orders();
+		orderParam.setOrderId(orderId);
+		Orders order = ordersServiceImpl.unique(orderParam);
+
+		// 获取机构详情
+		Org org = orgServiceImpl.get(order.getOrgId());
+
+		// 风险揭示书原件
+		String riskDisclosure = org.getRiskDisclosure();
+
+		// 用户（投资人）各自合并签名后的揭示书路径
+		String userRiskDisclosure = null;
+		if (!StringUtils.isBlank(riskDisclosure)) {
+			if (riskDisclosure.toLowerCase().endsWith(".docx")) {
+
+				Map<String, String> map = new HashMap<String, String>();
+
+				// 基金全称
+				map.put("FundFullName", order.getProductName());
+
+				// 投资人签名，这里是图片路径
+				String investorSignName = PropsUtils.get("images.url") + order.getContactSignUser();
+				map.put("InvestorSignName", investorSignName);
+				LOGGER.info("set investorSign path success, investorSignPath=[{}]",
+						investorSignName);
+
+				// 签单时间
+				String signTime = new SimpleDateFormat("yyyy年MM月dd日").format(new Date());
+				map.put("SignTime", signTime);
+				LOGGER.info("create signTime success, signTime=[{}]", signTime);
+
+				map.put("[", "");
+				map.put("]", "");
+
+				// 生成中间文件路径，中间文件不会被删除，作为备份
+				String filename = new File(riskDisclosure).getName();
+				String docxPath = MyFileUtils.getFilePath(filename, MyFileUtils.DOC_TYPE);
+
+				// 生成中间文件，即替换占位符生成新的docx文件，注：contactPath带占位符合同路径，docxPath替换后中间文件路径
+				WordUtils.searchAndReplace(riskDisclosure, docxPath, map);
+				LOGGER.info("replace contact file success, contactPath=[{}], docxPath=[{}]",
+						riskDisclosure, docxPath);
+
+				String investorName = investorServiceImpl.get(order.getInvestorId()).getName();
+
+				// 生成最终的pdf文件路径
+				userRiskDisclosure = MyFileUtils.getFilePath(
+						filename.replace(".docx", "_【" + investorName + "】.pdf"),
+						MyFileUtils.PDF_TYPE);
+
+				// 生成最终的pdf文件，即将中间文件docx转换成pdf文件即可,userContactPath:目标文件路径
+				WPS2PDFUtils.word2PDF(docxPath, userRiskDisclosure);
+				LOGGER.info("convert word to pdf success, docxPath=[{}], userContactPath=[{}]",
+						docxPath, userRiskDisclosure);
+
+				// 更新订单合同编号
+				Orders orderData = new Orders();
+
+				// 这里不是orderId而是id
+				orderData.setId(order.getId());
+				orderData.setRiskDisclosure(userRiskDisclosure);
+				ordersServiceImpl.updateById(orderData);
+				LOGGER.info(
+						"update order orderContactNum success,  orderId=[{}], userRiskDisclosure=[{}]",
+						orderId, userRiskDisclosure);
+			} else {
+				LOGGER.error("not support other file format but docx, userContactPath=[{}]",
+						userRiskDisclosure);
+			}
+		}
+
+		return userRiskDisclosure;
 	}
 
 }

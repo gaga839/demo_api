@@ -133,8 +133,7 @@ public class ProductBuyAction extends GenericAction<Orders> {
 				}
 			}
 
-			// 查询手机投资人
-			// 当investorId不为空时，需要根据id来更新非唯一项；反之新增
+			// 查询手机投资人， 当investorId不为空时，需要根据id来更新非唯一项；反之新增
 			Investor investorParam = new Investor();
 			investorParam.setMobile(mobile);
 			investorParam.setOrgId(investor.getOrgId());
@@ -176,7 +175,23 @@ public class ProductBuyAction extends GenericAction<Orders> {
 					return jsonBean;
 				}
 			} else {
-				if (!iRecord.getEmployeeId().equals(productBuyReqBean.getEmployeeId())) {
+				// 判断指派订单
+				if (StringUtils.isNotBlank(productBuyReqBean.getOrderId())) {
+					// 查询已存在订单
+					Orders orderParam = new Orders();
+					orderParam.setOrderId(productBuyReqBean.getOrderId());
+					Orders orderRecord = ordersServiceImpl.unique(orderParam);
+					if (StringUtils.isNotBlank(orderRecord.getAgentId())) {
+						if (!orderRecord.getEmployeeId().equals(iRecord.getEmployeeId())) {
+							jsonBean.setCode(0);
+							jsonBean.setMessage("该投资人的理财师并非该订单的指派理财师！");
+							LOGGER.error(
+									"agentId is not current employeeId, agentId=[{}], employeeId",
+									orderRecord.getAgentId(), productBuyReqBean.getEmployeeId());
+							return jsonBean;
+						}
+					}
+				} else if (!iRecord.getEmployeeId().equals(productBuyReqBean.getEmployeeId())) {
 					jsonBean.setCode(0);
 					jsonBean.setMessage("投资人是其他理财师的客户，请联系团队管理员进行协调！");
 					LOGGER.error("this investor below to other employee");
@@ -210,6 +225,10 @@ public class ProductBuyAction extends GenericAction<Orders> {
 				// 如果存在，需要更新
 				investor.setId(iRecord.getId());
 				investor.setDeleted(false);
+
+				if (StringUtils.isNotBlank(iRecord.getEmployeeId())) {
+					investor.setEmployeeId(null);
+				}
 				investorServiceImpl.updateById(investor);
 				LOGGER.info("update investor success");
 			}
@@ -247,8 +266,10 @@ public class ProductBuyAction extends GenericAction<Orders> {
 			order.setProductName(product.getProductName());
 			order.setProductBriefName(product.getBriefName());
 			// 缺少订单金额
-			order.setEmployeeId(employee.getEmployeeId());
-			order.setEmployeeName(employee.getName());
+			if (StringUtils.isBlank(order.getEmployeeId())) {
+				order.setEmployeeId(employee.getEmployeeId());
+				order.setEmployeeName(employee.getName());
+			}
 
 			// 缺少支付日期，padid，posid
 			PosPad posPadParam = new PosPad();
@@ -468,8 +489,10 @@ public class ProductBuyAction extends GenericAction<Orders> {
 
 			MultipartFile firstFile = multipartRequest.getFile("firstFile");
 			MultipartFile secondFile = multipartRequest.getFile("secondFile");
+			MultipartFile thirdFile = multipartRequest.getFile("thirdFile");
 			String firstFilePath = null;
 			String secondFilePath = null;
+			String thirdFilePath=null;
 
 			// 上传第一个文件
 			if (null != firstFile) {
@@ -499,12 +522,24 @@ public class ProductBuyAction extends GenericAction<Orders> {
 						secondFilePath, type);
 			}
 
+			// 上传第三个文件
+			if (null != thirdFile) {
+
+				// ==0，上传银行卡图片
+				if (type == 0) {
+					thirdFilePath = MyFileUtils.uploadImg(thirdFile, ImgType.ORDER);
+				}
+
+				LOGGER.info("upload third file success, thirdFile=[{}], type=[{}]", thirdFile, type);
+			}
+
 			Orders order = new Orders();
 			if (type == 0) {
 
 				// 更新身份证正反面路径
 				order.setIdcardFront(firstFilePath);
 				order.setIdcardBack(secondFilePath);
+				order.setBankCard(thirdFilePath);
 			} else if (type == 1) {
 
 				// 更新投资人签字路径
@@ -561,7 +596,8 @@ public class ProductBuyAction extends GenericAction<Orders> {
 				Double subScopeEnd = productGrade.getSubScopeEnd();
 				if (orderAmount < subScopeStart || orderAmount > subScopeEnd) {
 					jsonBean.setCode(0);
-					jsonBean.setMessage("请输入“" + subScopeStart + "万~" + subScopeEnd + "万”之间的金额！");
+					jsonBean.setMessage("请输入“" + (subScopeStart / 10000.0) + "万~"
+							+ (subScopeEnd / 10000.0) + "万”之间的金额！");
 					LOGGER.error("orderAmount out of subScope range, orderAmount=[{}]", orderAmount);
 					return jsonBean;
 				}

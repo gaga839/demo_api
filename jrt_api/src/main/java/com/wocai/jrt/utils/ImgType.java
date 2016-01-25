@@ -1,7 +1,7 @@
 package com.wocai.jrt.utils;
 
 public enum ImgType {
-	INVESTOR(1), EMPLOYEE(2), ORDER(3), PRODUCT(4);
+	INVESTOR(1), EMPLOYEE(2), ORDER(3), PRODUCT(4),EVALUAFILE(5);
 
 	private int value;
 

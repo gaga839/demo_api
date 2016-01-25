@@ -50,6 +50,7 @@
 		<result column="agent_id" property="agentId" jdbcType="VARCHAR" />
         <result column="deleted" property="deleted" jdbcType="BIT" />
         <result column="grade_id" property="gradeId" jdbcType="VARCHAR" />
+        <result column="bank_card" property="bankCard" jdbcType="VARCHAR" />
 	</resultMap>
 
 
@@ -66,7 +67,7 @@
 		pay_sign_user, video_user, video_manager, state,
 		bank_deposit, bank_account,
 		bank_name,handling_fee,sub_fee,order_all_amount,
-		type,contact_num,upload_voucher,audit_state,offline_pay,pay_method,offline_audit,agent_id,deleted,grade_id
+		type,contact_num,upload_voucher,audit_state,offline_pay,pay_method,offline_audit,agent_id,deleted,grade_id,bank_card
 	</sql>
 
 	<sql id="Example_Where_Clause">
@@ -579,6 +580,9 @@
             <if test="gradeId != null">
                 grade_id,
             </if>
+            <if test="bankCard != null">
+                bank_card,
+            </if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -700,6 +704,9 @@
             </if>
              <if test="gradeId != null">
                 #{gradeId,jdbcType=VARCHAR},
+            </if>
+            <if test="bankCard != null">
+                #{bankCard,jdbcType=VARCHAR},
             </if>
 		</trim>
 	</insert>
@@ -909,6 +916,9 @@
 			<if test="record.offlineAudit != null">
 				offline_audit = #{record.offlineAudit,jdbcType=VARCHAR},
 			</if>
+			<if test="record.bankCard != null">
+				bank_card = #{record.bankCard,jdbcType=VARCHAR}
+			</if>
 		</set>
 		<if test="_parameter != null">
 			<include refid="update_model_where_clause" />
@@ -1038,7 +1048,13 @@
                 deleted = #{deleted,jdbcType=BIT},
             </if>
             <if test="gradeId != null">
-                grade_id = #{gradeId,jdbcType=VARCHAR}
+                grade_id = #{gradeId,jdbcType=VARCHAR},
+            </if>
+            <if test="bankCard != null">
+                bank_card = #{bankCard,jdbcType=VARCHAR},
+            </if>
+            <if test="riskDisclosure != null">
+                risk_disclosure = #{riskDisclosure,jdbcType=VARCHAR}
             </if>
 		</set>
 		where id = #{id,jdbcType=VARCHAR}

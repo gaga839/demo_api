@@ -159,6 +159,11 @@ public class Investor {
      */
     private Boolean verify;
 	
+    /**
+     * 测评结果pdf路径
+     */
+    private String evaluaFile;
+    
     private String signImage;
     
 	private MultipartFile avatarFile;
@@ -168,6 +173,14 @@ public class Investor {
 	 */
 	private Integer evaluaState;
 	
+	public String getEvaluaFile() {
+		return evaluaFile;
+	}
+
+	public void setEvaluaFile(String evaluaFile) {
+		this.evaluaFile = evaluaFile;
+	}
+
 	public Integer getEvaluaState() {
 		return evaluaState;
 	}

@@ -23,6 +23,7 @@
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="bank_customer_no" property="bankCustomerNo" jdbcType="VARCHAR" />
     <result column="bank_terminal_no" property="bankTerminalNo" jdbcType="VARCHAR" />
+    <result column="risk_disclosure" property="riskDisclosure" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     <!--
@@ -30,7 +31,7 @@
       MyBatis代码工具自动生成，不要修改！
     -->
     id, org_code, name, brief_name, state, org_group_id, summary, address, contact, mobile, 
-    email, create_time, end_time, device_number, remark, bank_customer_no, bank_terminal_no
+    email, create_time, end_time, device_number, remark, bank_customer_no, bank_terminal_no,risk_disclosure
   </sql>
   <sql id="Example_Where_Clause" >
     <!--
